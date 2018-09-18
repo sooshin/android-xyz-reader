@@ -1,5 +1,5 @@
 <component name="libraryTable">
-  <library name="Gradle: __local_jars__:D.\android-studio-projects-d\xyz-reader-starter-code-master\XYZReader\libs\volley.jar:unspecified@jar">
+  <library name="Gradle: __local_aars__:D.\android-studio-projects-d\xyz-reader-starter-code-master\XYZReader\libs\volley.jar:unspecified@jar">
     <CLASSES>
       <root url="jar://$PROJECT_DIR$/XYZReader/libs/volley.jar!/" />
     </CLASSES>
