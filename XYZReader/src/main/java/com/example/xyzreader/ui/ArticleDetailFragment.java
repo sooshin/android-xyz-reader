@@ -238,11 +238,22 @@ public class ArticleDetailFragment extends Fragment implements
                         public void onResponse(ImageLoader.ImageContainer imageContainer, boolean b) {
                             Bitmap bitmap = imageContainer.getBitmap();
                             if (bitmap != null) {
-                                Palette p = Palette.generate(bitmap, 12);
-                                mMutedColor = p.getDarkMutedColor(0xFF333333);
+                                // Generate the palette asynchronously using an AsyncTask to gather
+                                // the Palette swatch information from the bitmap
+                                // Reference: @see "https://github.com/codepath/android_guides/wiki/Dynamic-Color-using-Palettes"
+                                // @see "https://developer.android.com/training/material/palette-colors#java"
+                                Palette.from(bitmap).maximumColorCount(12).generate(new Palette.PaletteAsyncListener() {
+                                    @Override
+                                    public void onGenerated(@NonNull Palette palette) {
+                                        Palette.Swatch vibrant = palette.getVibrantSwatch();
+                                        if (vibrant != null) {
+                                            mMutedColor = vibrant.getRgb();
+                                            mRootView.findViewById(R.id.meta_bar)
+                                                    .setBackgroundColor(mMutedColor);
+                                        }
+                                    }
+                                });
                                 mPhotoView.setImageBitmap(imageContainer.getBitmap());
-                                mRootView.findViewById(R.id.meta_bar)
-                                        .setBackgroundColor(mMutedColor);
                                 updateStatusBar();
                             }
                         }
