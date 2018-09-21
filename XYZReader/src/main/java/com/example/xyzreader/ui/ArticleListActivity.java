@@ -58,7 +58,8 @@ public class ArticleListActivity extends AppCompatActivity implements
 
         mToolbar = findViewById(R.id.toolbar);
 
-        mSwipeRefreshLayout = findViewById(R.id.swipe_refresh_layout);
+        // Set the color scheme of the SwipeRefreshLayout and setup OnRefreshListener
+        setSwipeRefreshLayout();
 
         mRecyclerView = findViewById(R.id.recycler_view);
         getSupportLoaderManager().initLoader(0, null, this);
@@ -66,6 +67,24 @@ public class ArticleListActivity extends AppCompatActivity implements
         if (savedInstanceState == null) {
             refresh();
         }
+    }
+
+    /**
+     * Set the SwipeRefreshLayout triggered by a swipe gesture.
+     */
+    private void setSwipeRefreshLayout() {
+        mSwipeRefreshLayout = findViewById(R.id.swipe_refresh_layout);
+        mSwipeRefreshLayout.setColorSchemeColors(getResources().getColor(R.color.colorAccent),
+                getResources().getColor(R.color.color_swipe_deep_purple),
+                getResources().getColor(R.color.color_swipe_red));
+        // The swipe gesture triggers a refresh
+        // Reference: @see "https://discussions.udacity.com/t/swiperefreshlayout-indicator-remains-visible-after-repeated-swipes/161424"
+        mSwipeRefreshLayout.setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener() {
+            @Override
+            public void onRefresh() {
+                refresh();
+            }
+        });
     }
 
     private void refresh() {

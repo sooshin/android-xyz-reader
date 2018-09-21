@@ -31,4 +31,7 @@
 
     <!-- Text color for the article body -->
     <color name="color_body_text">#1b0000</color>
+
+    <color name="color_swipe_deep_purple">#7C4DFF</color>
+    <color name="color_swipe_red">#FF584B</color>
 </resources>
