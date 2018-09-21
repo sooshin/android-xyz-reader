@@ -15,8 +15,19 @@
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             app:collapsedTitleTextAppearance="@style/TextAppearance.AppCompat.Widget.ActionBar.Title.Inverse"
+            app:contentScrim="@color/colorPrimary"
             app:expandedTitleTextAppearance="@style/TextAppearance.AppCompat.Widget.ActionBar.Title.Inverse"
             app:layout_scrollFlags="scroll|exitUntilCollapsed">
+
+            <ImageView
+                android:layout_width="@dimen/size_reading_image"
+                android:layout_height="@dimen/size_reading_image"
+                android:layout_gravity="bottom|end"
+                android:layout_marginEnd="@dimen/list_image_side_margin"
+                android:layout_marginBottom="@dimen/list_image_bottom_margin"
+                android:contentDescription="@string/reading_content_description"
+                android:scaleType="centerCrop"
+                android:src="@drawable/reading" />
 
             <android.support.v7.widget.Toolbar
                 android:id="@+id/toolbar"

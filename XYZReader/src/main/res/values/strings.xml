@@ -9,4 +9,7 @@
 
     <string name="up">Up</string>
 
+    <!-- Content description for the ImageView -->
+    <string name="reading_content_description">Reading image</string>
+
 </resources>
