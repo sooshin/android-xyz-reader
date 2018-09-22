@@ -23,8 +23,8 @@
                 android:layout_width="@dimen/size_reading_image"
                 android:layout_height="@dimen/size_reading_image"
                 android:layout_gravity="bottom|end"
-                android:layout_marginEnd="@dimen/list_image_side_margin"
                 android:layout_marginBottom="@dimen/list_image_bottom_margin"
+                android:layout_marginEnd="@dimen/list_image_side_margin"
                 android:contentDescription="@string/reading_content_description"
                 android:scaleType="centerCrop"
                 android:src="@drawable/reading" />
@@ -62,6 +62,7 @@
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:clipToPadding="false"
+            android:layoutAnimation="@anim/layout_animation_from_bottom"
             android:paddingBottom="28dp"
             android:paddingLeft="@dimen/list_side_margin"
             android:paddingRight="@dimen/list_side_margin"
