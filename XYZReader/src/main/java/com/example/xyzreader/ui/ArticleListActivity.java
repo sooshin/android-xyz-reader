@@ -19,6 +19,8 @@ import android.text.format.DateUtils;
 import android.util.Log;
 import android.view.View;
 import android.view.ViewGroup;
+import android.view.animation.AnimationUtils;
+import android.view.animation.LayoutAnimationController;
 import android.widget.TextView;
 
 import com.example.xyzreader.R;
@@ -83,12 +85,28 @@ public class ArticleListActivity extends AppCompatActivity implements
             @Override
             public void onRefresh() {
                 refresh();
+                // Rerun the layout animation for RecyclerView
+                runLayoutAnimation(mRecyclerView);
             }
         });
     }
 
     private void refresh() {
         startService(new Intent(this, UpdaterService.class));
+    }
+
+    /**
+     * Rerun the layout animation for RecyclerView.
+     *
+     * Reference: @see "https://proandroiddev.com/enter-animation-using-recyclerview-and-layoutanimation-part-1-list-75a874a5d213"
+     */
+    private void runLayoutAnimation(RecyclerView recyclerView) {
+        Context context = recyclerView.getContext();
+        LayoutAnimationController controller =
+                AnimationUtils.loadLayoutAnimation(context, R.anim.layout_animation_from_bottom);
+        recyclerView.setLayoutAnimation(controller);
+        recyclerView.getAdapter().notifyDataSetChanged();
+        recyclerView.scheduleLayoutAnimation();
     }
 
     @Override
