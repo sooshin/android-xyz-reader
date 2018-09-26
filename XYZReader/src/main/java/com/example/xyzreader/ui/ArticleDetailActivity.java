@@ -1,15 +1,16 @@
 package com.example.xyzreader.ui;
 
-import android.support.annotation.NonNull;
-import android.support.v4.app.Fragment;
-import android.support.v4.app.FragmentManager;
-import android.support.v4.app.LoaderManager;
-import android.support.v4.content.Loader;
+import android.content.Intent;
 import android.database.Cursor;
 import android.graphics.drawable.ColorDrawable;
 import android.os.Build;
 import android.os.Bundle;
+import android.support.annotation.NonNull;
+import android.support.v4.app.Fragment;
+import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentStatePagerAdapter;
+import android.support.v4.app.LoaderManager;
+import android.support.v4.content.Loader;
 import android.support.v4.view.ViewPager;
 import android.support.v7.app.AppCompatActivity;
 import android.util.TypedValue;
@@ -38,6 +39,9 @@ public class ArticleDetailActivity extends AppCompatActivity
     private MyPagerAdapter mPagerAdapter;
     private View mUpButtonContainer;
     private View mUpButton;
+
+    /** The position of the item clicked */
+    private int mItemPosition;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -106,6 +110,23 @@ public class ArticleDetailActivity extends AppCompatActivity
                 mSelectedItemId = mStartId;
             }
         }
+
+        // Get the position of the item clicked via Intent
+        getItemPosition();
+    }
+
+    /**
+     * Get the position of the item clicked via Intent, which is used to move the Cursor position to
+     * the clicked position.
+     * Reference: @see "https://discussions.udacity.com/t/how-to-optimise-onloadfinished-in-detailactivity/213247/2"
+     */
+    private void getItemPosition() {
+        Intent intent = getIntent();
+        if (intent != null) {
+            if (intent.hasExtra(ArticleListActivity.EXTRA_POSITION)) {
+                mItemPosition = intent.getIntExtra(ArticleListActivity.EXTRA_POSITION, 0);
+            }
+        }
     }
 
     @NonNull
@@ -119,20 +140,10 @@ public class ArticleDetailActivity extends AppCompatActivity
         mCursor = cursor;
         mPagerAdapter.notifyDataSetChanged();
 
-        // Select the start ID
-        if (mStartId > 0) {
-            mCursor.moveToFirst();
-            // TODO: optimize
-            while (!mCursor.isAfterLast()) {
-                if (mCursor.getLong(ArticleLoader.Query._ID) == mStartId) {
-                    final int position = mCursor.getPosition();
-                    mPager.setCurrentItem(position, false);
-                    break;
-                }
-                mCursor.moveToNext();
-            }
-            mStartId = 0;
-        }
+        // Optimize the code
+        // Move the Cursor position to the clicked position
+        mPager.setCurrentItem(mItemPosition, false);
+        mCursor.moveToPosition(mItemPosition);
     }
 
     @Override
