@@ -6,8 +6,10 @@ import android.graphics.Bitmap;
 import android.graphics.Color;
 import android.graphics.Rect;
 import android.graphics.drawable.ColorDrawable;
+import android.os.Build;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
+import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.LoaderManager;
 import android.support.v4.app.ShareCompat;
@@ -20,6 +22,7 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.view.ViewTreeObserver;
 import android.widget.ImageView;
 import android.widget.TextView;
 
@@ -41,6 +44,11 @@ import java.util.GregorianCalendar;
 public class ArticleDetailFragment extends Fragment implements
         LoaderManager.LoaderCallbacks<Cursor> {
     private static final String TAG = "ArticleDetailFragment";
+    private static final String ARG_IMAGE_POSITION = "arg_image_position";
+    private static final String ARG_STARTING_IMAGE_POSITION = "arg_starting_image_position";
+
+    private int mPosition;
+    private int mStartingPosition;
 
     public static final String ARG_ITEM_ID = "item_id";
     private static final float PARALLAX_FACTOR = 1.25f;
@@ -73,9 +81,12 @@ public class ArticleDetailFragment extends Fragment implements
     public ArticleDetailFragment() {
     }
 
-    public static ArticleDetailFragment newInstance(long itemId) {
+    public static ArticleDetailFragment newInstance(long itemId, int position, int startingPosition) {
         Bundle arguments = new Bundle();
         arguments.putLong(ARG_ITEM_ID, itemId);
+        arguments.putInt(ARG_IMAGE_POSITION, position);
+        arguments.putInt(ARG_STARTING_IMAGE_POSITION, startingPosition);
+
         ArticleDetailFragment fragment = new ArticleDetailFragment();
         fragment.setArguments(arguments);
         return fragment;
@@ -87,6 +98,12 @@ public class ArticleDetailFragment extends Fragment implements
 
         if (getArguments().containsKey(ARG_ITEM_ID)) {
             mItemId = getArguments().getLong(ARG_ITEM_ID);
+        }
+        if (getArguments().containsKey(ARG_IMAGE_POSITION)) {
+            mPosition = getArguments().getInt(ARG_IMAGE_POSITION);
+        }
+        if (getArguments().containsKey(ARG_STARTING_IMAGE_POSITION)) {
+            mStartingPosition = getArguments().getInt(ARG_STARTING_IMAGE_POSITION);
         }
 
         mIsCard = getResources().getBoolean(R.bool.detail_is_card);
@@ -134,6 +151,14 @@ public class ArticleDetailFragment extends Fragment implements
         });
 
         mPhotoView = mRootView.findViewById(R.id.photo);
+
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
+            // Make sure the Fragments are using the same transition name
+            String transitionName = getString(R.string.transition_photo) + mPosition;
+            mPhotoView.setTransitionName(transitionName);
+            Log.v(TAG, "transition Name: " + transitionName);
+        }
+
         mPhotoContainerView = mRootView.findViewById(R.id.photo_container);
 
         mStatusBarColorDrawable = new ColorDrawable(0);
@@ -227,7 +252,9 @@ public class ArticleDetailFragment extends Fragment implements
                                 + "</font>"));
 
             }
-            bodyView.setText(Html.fromHtml(mCursor.getString(ArticleLoader.Query.BODY).replaceAll("(\r\n|\n)", "<br />")));
+            // Truncate the text to avoid a delay with the transition
+            bodyView.setText(Html.fromHtml(mCursor.getString(ArticleLoader.Query.BODY)
+                    .substring(0, 1000).replaceAll("(\r\n|\n)", "<br />")));
             ImageLoaderHelper.getInstance(getActivity()).getImageLoader()
                     .get(mCursor.getString(ArticleLoader.Query.PHOTO_URL), new ImageLoader.ImageListener() {
                         @Override
@@ -259,12 +286,31 @@ public class ArticleDetailFragment extends Fragment implements
 
                         }
                     });
+
+            // Start the postponed transition in an OnPreDrawListener, which will be called after
+            // the shared element has been measured and laid out.
+            scheduleStartPostponedTransition(mPhotoView);
         } else {
             mRootView.setVisibility(View.GONE);
             titleView.setText("N/A");
             bylineView.setText("N/A" );
             bodyView.setText("N/A");
         }
+    }
+
+    /**
+     * Start the postponed transition in an OnPreDrawListener, which will be called after
+     * the shared element has been properly loaded.
+     */
+    private void scheduleStartPostponedTransition(final View sharedElement) {
+        sharedElement.getViewTreeObserver().addOnPreDrawListener(new ViewTreeObserver.OnPreDrawListener() {
+            @Override
+            public boolean onPreDraw() {
+                sharedElement.getViewTreeObserver().removeOnPreDrawListener(this);
+                getActivityCast().startPostponedEnterTransition();
+                return true;
+            }
+        });
     }
 
     @NonNull
@@ -307,5 +353,30 @@ public class ArticleDetailFragment extends Fragment implements
         return mIsCard
                 ? (int) mPhotoContainerView.getTranslationY() + mPhotoView.getHeight() - mScrollY
                 : mPhotoView.getHeight() - mScrollY;
+    }
+
+    /**
+     * Returns the shared element that should be transitioned back to the previous Activity,
+     * or null if the view is not visible on the screen.
+     *
+     * Reference: @see "https://github.com/alexjlockwood/adp-activity-transitions"
+     */
+    @Nullable
+    ImageView getPhotoView() {
+        if (isViewInBounds(getActivityCast().getWindow().getDecorView(), mPhotoView)) {
+            return mPhotoView;
+        }
+        return null;
+    }
+
+    /**
+     * Returns true if {@param view} is contained within {@param container}'s bounds.
+     *
+     * Reference: @see "https://github.com/alexjlockwood/adp-activity-transitions"
+     */
+    private static boolean isViewInBounds(@NonNull View container, @NonNull View view) {
+        Rect containerBounds = new Rect();
+        container.getHitRect(containerBounds);
+        return view.getLocalVisibleRect(containerBounds);
     }
 }

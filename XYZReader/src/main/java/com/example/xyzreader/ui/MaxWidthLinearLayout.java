@@ -63,4 +63,16 @@ public class MaxWidthLinearLayout extends LinearLayout {
         widthMeasureSpec = MeasureSpec.makeMeasureSpec(newSpecWidth, MeasureSpec.getMode(widthMeasureSpec));
         super.onMeasure(widthMeasureSpec, heightMeasureSpec);
     }
+
+    /**
+     * The view has a size too large for the maxWidth attribute, which causes an error
+     * when we apply transitions.
+     * This method will prevent the use of GPU for transitions.
+     *
+     * Reference: @see "https://discussions.udacity.com/t/when-i-add-frame-layout-on-line-13-my-app-crashes/668463/6"
+     */
+    @Override
+    public boolean hasOverlappingRendering() {
+        return false;
+    }
 }

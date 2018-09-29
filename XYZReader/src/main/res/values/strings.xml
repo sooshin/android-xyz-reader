@@ -12,4 +12,6 @@
     <!-- Content description for the ImageView -->
     <string name="reading_content_description">Reading image</string>
 
+    <!-- Transition name -->
+    <string name="transition_photo">transition_photo</string>
 </resources>
