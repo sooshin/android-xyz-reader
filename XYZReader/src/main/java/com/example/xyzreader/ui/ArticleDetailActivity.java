@@ -52,9 +52,6 @@ public class ArticleDetailActivity extends AppCompatActivity
     private View mUpButtonContainer;
     private View mUpButton;
 
-    /** The position of the item clicked */
-    private int mItemPosition;
-
     /** The current position in the ViewPager */
     private int mCurrentPosition;
     /** The position of a selected item in the ArticleListActivity */
@@ -117,7 +114,8 @@ public class ArticleDetailActivity extends AppCompatActivity
         }
         setContentView(R.layout.activity_article_detail);
 
-        // Get the starting position from the ArticleListActivity via Intent
+        // Get the position of the item clicked from the ArticleListActivity via Intent, which is
+        // used to move the Cursor position to the clicked position in onLoadFinished().
         mStartingPosition = getIntent().getIntExtra(EXTRA_STARTING_POSITION, 0);
         if (savedInstanceState == null) {
             mCurrentPosition = mStartingPosition;
@@ -187,23 +185,6 @@ public class ArticleDetailActivity extends AppCompatActivity
                 mSelectedItemId = mStartId;
             }
         }
-
-        // Get the position of the item clicked via Intent
-        getItemPosition();
-    }
-
-    /**
-     * Get the position of the item clicked via Intent, which is used to move the Cursor position to
-     * the clicked position.
-     * Reference: @see "https://discussions.udacity.com/t/how-to-optimise-onloadfinished-in-detailactivity/213247/2"
-     */
-    private void getItemPosition() {
-        Intent intent = getIntent();
-        if (intent != null) {
-            if (intent.hasExtra(ArticleListActivity.EXTRA_POSITION)) {
-                mItemPosition = intent.getIntExtra(ArticleListActivity.EXTRA_POSITION, 0);
-            }
-        }
     }
 
     @NonNull
@@ -218,9 +199,10 @@ public class ArticleDetailActivity extends AppCompatActivity
         mPagerAdapter.notifyDataSetChanged();
 
         // Optimize the code
+        // Reference: @see "https://discussions.udacity.com/t/how-to-optimise-onloadfinished-in-detailactivity/213247/2"
         // Move the Cursor position to the clicked position
-        mPager.setCurrentItem(mItemPosition, false);
-        mCursor.moveToPosition(mItemPosition);
+        mPager.setCurrentItem(mCurrentPosition, false);
+        mCursor.moveToPosition(mCurrentPosition);
     }
 
     @Override

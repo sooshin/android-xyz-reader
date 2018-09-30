@@ -51,7 +51,6 @@ public class ArticleListActivity extends AppCompatActivity implements
 
     private static final String TAG = ArticleListActivity.class.toString();
     /** Key for Intent Extras */
-    public static final String EXTRA_POSITION = "position";
     public static final String EXTRA_STARTING_POSITION = "extra_starting_position";
     public static final String EXTRA_CURRENT_POSITION = "extra_current_position";
 
@@ -299,8 +298,6 @@ public class ArticleListActivity extends AppCompatActivity implements
                 public void onClick(View view) {
                     Intent intent = new Intent(Intent.ACTION_VIEW,
                             ItemsContract.Items.buildItemUri(getItemId(vh.getAdapterPosition())));
-                    // Pass the position clicked via Intent
-                    intent.putExtra(EXTRA_POSITION, vh.getAdapterPosition());
                     // Pass the starting position where the user clicks in the ArticleListActivity
                     intent.putExtra(EXTRA_STARTING_POSITION, vh.getAdapterPosition());
 
