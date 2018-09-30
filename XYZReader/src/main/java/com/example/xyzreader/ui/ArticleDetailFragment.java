@@ -173,7 +173,10 @@ public class ArticleDetailFragment extends Fragment implements
             }
         });
 
-        bindViews();
+        // Remove the call to bindViews() since at this point the loader was not initialized yet,
+        // so there are still no items to display.
+        // Reference: @see "https://discussions.udacity.com/t/weird-behaviour-of-shared-transition/293114"
+
         updateStatusBar();
         return mRootView;
     }
