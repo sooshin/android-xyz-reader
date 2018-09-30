@@ -56,7 +56,7 @@ public class ArticleDetailFragment extends Fragment implements
     private Cursor mCursor;
     private long mItemId;
     private View mRootView;
-    private int mMutedColor = 0xFF333333;
+    private int mVibrantColor = 0xFF333333;
     private ObservableScrollView mScrollView;
     private DrawInsetsFrameLayout mDrawInsetsFrameLayout;
     private ColorDrawable mStatusBarColorDrawable;
@@ -188,9 +188,9 @@ public class ArticleDetailFragment extends Fragment implements
                     mStatusBarFullOpacityBottom - mTopInset * 3,
                     mStatusBarFullOpacityBottom - mTopInset);
             color = Color.argb((int) (255 * f),
-                    (int) (Color.red(mMutedColor) * 0.9),
-                    (int) (Color.green(mMutedColor) * 0.9),
-                    (int) (Color.blue(mMutedColor) * 0.9));
+                    (int) (Color.red(mVibrantColor) * 0.9),
+                    (int) (Color.green(mVibrantColor) * 0.9),
+                    (int) (Color.blue(mVibrantColor) * 0.9));
         }
         mStatusBarColorDrawable.setColor(color);
         mDrawInsetsFrameLayout.setInsetBackground(mStatusBarColorDrawable);
@@ -273,9 +273,9 @@ public class ArticleDetailFragment extends Fragment implements
                                     public void onGenerated(@NonNull Palette palette) {
                                         Palette.Swatch vibrant = palette.getVibrantSwatch();
                                         if (vibrant != null) {
-                                            mMutedColor = vibrant.getRgb();
+                                            mVibrantColor = vibrant.getRgb();
                                             mRootView.findViewById(R.id.meta_bar)
-                                                    .setBackgroundColor(mMutedColor);
+                                                    .setBackgroundColor(mVibrantColor);
                                         }
                                     }
                                 });
