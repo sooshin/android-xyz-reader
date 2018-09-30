@@ -1,5 +1,6 @@
 package com.example.xyzreader.ui;
 
+import android.annotation.TargetApi;
 import android.content.Intent;
 import android.database.Cursor;
 import android.graphics.drawable.ColorDrawable;
@@ -14,7 +15,6 @@ import android.support.v4.app.SharedElementCallback;
 import android.support.v4.content.Loader;
 import android.support.v4.view.ViewPager;
 import android.support.v7.app.AppCompatActivity;
-import android.util.Log;
 import android.util.TypedValue;
 import android.view.View;
 import android.view.ViewGroup;
@@ -71,6 +71,7 @@ public class ArticleDetailActivity extends AppCompatActivity
      * @see "https://discussions.udacity.com/t/trouble-implementing-shared-element-transition/674912/19"
      */
     private final SharedElementCallback mCallback = new SharedElementCallback() {
+        @TargetApi(Build.VERSION_CODES.LOLLIPOP)
         @Override
         public void onMapSharedElements(List<String> names, Map<String, View> sharedElements) {
             if (mIsReturning) {
@@ -102,19 +103,19 @@ public class ArticleDetailActivity extends AppCompatActivity
             getWindow().getDecorView().setSystemUiVisibility(
                     View.SYSTEM_UI_FLAG_LAYOUT_FULLSCREEN |
                             View.SYSTEM_UI_FLAG_LAYOUT_STABLE);
+
+            // Postpone the shared element enter transition.
+            // Although the transition is between activities, the shared element is included
+            // in a Fragment, which is loaded by a ViewPager. The problem is that the animations happen
+            // very early in the Activity Lifecycle. So, we need to postpone the transition until the
+            // shared element has been properly loaded.
+            // Reference: @see "https://discussions.udacity.com/t/trouble-implementing-shared-element-transition/674912/8"
+            postponeEnterTransition();
+
+            // SharedElementCallback will be called to handle shared elements on the launched Activity
+            setEnterSharedElementCallback(mCallback);
         }
         setContentView(R.layout.activity_article_detail);
-
-        // Postpone the shared element enter transition.
-        // Although the transition is between activities, the shared element is included
-        // in a Fragment, which is loaded by a ViewPager. The problem is that the animations happen
-        // very early in the Activity Lifecycle. So, we need to postpone the transition until the
-        // shared element has been properly loaded.
-        // Reference: @see "https://discussions.udacity.com/t/trouble-implementing-shared-element-transition/674912/8"
-        postponeEnterTransition();
-
-        // SharedElementCallback will be called to handle shared elements on the launched Activity
-        setEnterSharedElementCallback(mCallback);
 
         // Get the starting position from the ArticleListActivity via Intent
         mStartingPosition = getIntent().getIntExtra(EXTRA_STARTING_POSITION, 0);

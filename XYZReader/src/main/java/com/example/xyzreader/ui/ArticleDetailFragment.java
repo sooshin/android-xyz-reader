@@ -310,7 +310,9 @@ public class ArticleDetailFragment extends Fragment implements
             @Override
             public boolean onPreDraw() {
                 sharedElement.getViewTreeObserver().removeOnPreDrawListener(this);
-                getActivityCast().startPostponedEnterTransition();
+                if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
+                    getActivityCast().startPostponedEnterTransition();
+                }
                 return true;
             }
         });

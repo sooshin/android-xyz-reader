@@ -1,6 +1,6 @@
 package com.example.xyzreader.ui;
 
-import android.app.Activity;
+import android.annotation.TargetApi;
 import android.content.BroadcastReceiver;
 import android.content.Context;
 import android.content.Intent;
@@ -79,6 +79,7 @@ public class ArticleListActivity extends AppCompatActivity implements
         // Lets the SharedElementCallback adjust the mapping of shared element names to Views.
         // Check if the position has changed. If so, remove the references to the old shared element
         // and add the new one.
+        @TargetApi(Build.VERSION_CODES.LOLLIPOP)
         @Override
         public void onMapSharedElements(List<String> names, Map<String, View> sharedElements) {
             if (mReenterState != null) {
@@ -122,9 +123,10 @@ public class ArticleListActivity extends AppCompatActivity implements
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_article_list);
-        // SharedElementCallback will be called to handle shared elements on the launching Activity
-        setExitSharedElementCallback(mCallback);
-
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
+            // SharedElementCallback will be called to handle shared elements on the launching Activity
+            setExitSharedElementCallback(mCallback);
+        }
         mToolbar = findViewById(R.id.toolbar);
 
         // Set the color scheme of the SwipeRefreshLayout and setup OnRefreshListener
@@ -197,7 +199,9 @@ public class ArticleListActivity extends AppCompatActivity implements
             mRecyclerView.scrollToPosition(currentPosition);
         }
         // Postpone the shared element return transition
-        postponeEnterTransition();
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
+            postponeEnterTransition();
+        }
         // Start the postponed transition
         scheduleStartPostponedTransition(mRecyclerView);
     }
@@ -213,7 +217,9 @@ public class ArticleListActivity extends AppCompatActivity implements
                 sharedElement.getViewTreeObserver().removeOnPreDrawListener(this);
                 // Request layout in order to get a smooth transition
                 mRecyclerView.requestLayout();
-                startPostponedEnterTransition();
+                if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
+                    startPostponedEnterTransition();
+                }
                 return true;
             }
         });
@@ -355,7 +361,9 @@ public class ArticleListActivity extends AppCompatActivity implements
                     ImageLoaderHelper.getInstance(ArticleListActivity.this).getImageLoader());
             holder.thumbnailView.setAspectRatio(mCursor.getFloat(ArticleLoader.Query.ASPECT_RATIO));
             // Set unique transition name for each image
-            holder.thumbnailView.setTransitionName(getString(R.string.transition_photo) + position);
+            if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
+                holder.thumbnailView.setTransitionName(getString(R.string.transition_photo) + position);
+            }
             holder.thumbnailView.setTag(getString(R.string.transition_photo) + position);
         }
 
