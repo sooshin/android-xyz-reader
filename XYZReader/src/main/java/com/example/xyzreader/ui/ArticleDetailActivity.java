@@ -204,6 +204,10 @@ public class ArticleDetailActivity extends AppCompatActivity
         // Move the Cursor position to the clicked position
         mPager.setCurrentItem(mCurrentPosition, false);
         mCursor.moveToPosition(mCurrentPosition);
+
+        // Apply GateTransformation to the page views using animation properties
+        // Reference: @see "https://github.com/dipanshukr/Viewpager-Transformation"
+        mPager.setPageTransformer(true, new GateTransformation());
     }
 
     @Override
