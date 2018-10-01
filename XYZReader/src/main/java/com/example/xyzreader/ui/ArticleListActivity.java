@@ -9,6 +9,7 @@ import android.database.Cursor;
 import android.os.Build;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
+import android.support.v4.app.ActivityCompat;
 import android.support.v4.app.ActivityOptionsCompat;
 import android.support.v4.app.LoaderManager;
 import android.support.v4.app.SharedElementCallback;
@@ -199,7 +200,7 @@ public class ArticleListActivity extends AppCompatActivity implements
         }
         // Postpone the shared element return transition
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
-            postponeEnterTransition();
+            ActivityCompat.postponeEnterTransition(this);
         }
         // Start the postponed transition
         scheduleStartPostponedTransition(mRecyclerView);
@@ -217,7 +218,7 @@ public class ArticleListActivity extends AppCompatActivity implements
                 // Request layout in order to get a smooth transition
                 mRecyclerView.requestLayout();
                 if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
-                    startPostponedEnterTransition();
+                    ActivityCompat.startPostponedEnterTransition(ArticleListActivity.this);
                 }
                 return true;
             }

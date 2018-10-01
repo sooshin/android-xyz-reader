@@ -7,6 +7,7 @@ import android.graphics.drawable.ColorDrawable;
 import android.os.Build;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
+import android.support.v4.app.ActivityCompat;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentStatePagerAdapter;
@@ -107,7 +108,7 @@ public class ArticleDetailActivity extends AppCompatActivity
             // very early in the Activity Lifecycle. So, we need to postpone the transition until the
             // shared element has been properly loaded.
             // Reference: @see "https://discussions.udacity.com/t/trouble-implementing-shared-element-transition/674912/8"
-            postponeEnterTransition();
+            ActivityCompat.postponeEnterTransition(this);
 
             // SharedElementCallback will be called to handle shared elements on the launched Activity
             setEnterSharedElementCallback(mCallback);
