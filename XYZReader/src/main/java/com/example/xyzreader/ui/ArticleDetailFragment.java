@@ -6,6 +6,7 @@ import android.graphics.Bitmap;
 import android.graphics.Color;
 import android.graphics.Rect;
 import android.graphics.drawable.ColorDrawable;
+import android.graphics.drawable.Drawable;
 import android.os.Build;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
@@ -27,10 +28,10 @@ import android.view.ViewTreeObserver;
 import android.widget.ImageView;
 import android.widget.TextView;
 
-import com.android.volley.VolleyError;
-import com.android.volley.toolbox.ImageLoader;
 import com.example.xyzreader.R;
 import com.example.xyzreader.data.ArticleLoader;
+import com.squareup.picasso.Picasso;
+import com.squareup.picasso.Target;
 
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
@@ -74,6 +75,41 @@ public class ArticleDetailFragment extends Fragment implements
     private SimpleDateFormat outputFormat = new SimpleDateFormat();
     // Most time functions can only handle 1902 - 2037
     private GregorianCalendar START_OF_EPOCH = new GregorianCalendar(2,1,1);
+
+    /** An arbitrary listener for image loading */
+    private Target mTarget = new Target() {
+        @Override
+        public void onBitmapLoaded(Bitmap bitmap, Picasso.LoadedFrom from) {
+            if (bitmap != null) {
+                // Generate the palette asynchronously using an AsyncTask to gather
+                // the Palette swatch information from the bitmap
+                // Reference: @see "https://github.com/codepath/android_guides/wiki/Dynamic-Color-using-Palettes"
+                // @see "https://developer.android.com/training/material/palette-colors#java"
+                Palette.from(bitmap).maximumColorCount(12).generate(new Palette.PaletteAsyncListener() {
+                    @Override
+                    public void onGenerated(@NonNull Palette palette) {
+                        Palette.Swatch vibrant = palette.getVibrantSwatch();
+                        if (vibrant != null) {
+                            mVibrantColor = vibrant.getRgb();
+                            mRootView.findViewById(R.id.meta_bar)
+                                    .setBackgroundColor(mVibrantColor);
+                        }
+                    }
+                });
+                mPhotoView.setImageBitmap(bitmap);
+                updateStatusBar();
+            }
+        }
+
+        @Override
+        public void onBitmapFailed(Drawable errorDrawable) {
+            Log.e(TAG, "Failed to load images");
+        }
+
+        @Override
+        public void onPrepareLoad(Drawable placeHolderDrawable) {
+        }
+    };
 
     /**
      * Mandatory empty constructor for the fragment manager to instantiate the
@@ -259,37 +295,11 @@ public class ArticleDetailFragment extends Fragment implements
             // Truncate the text to avoid a delay with the transition
             bodyView.setText(Html.fromHtml(mCursor.getString(ArticleLoader.Query.BODY)
                     .substring(0, 1000).replaceAll("(\r\n|\n)", "<br />")));
-            ImageLoaderHelper.getInstance(getActivity()).getImageLoader()
-                    .get(mCursor.getString(ArticleLoader.Query.PHOTO_URL), new ImageLoader.ImageListener() {
-                        @Override
-                        public void onResponse(ImageLoader.ImageContainer imageContainer, boolean b) {
-                            Bitmap bitmap = imageContainer.getBitmap();
-                            if (bitmap != null) {
-                                // Generate the palette asynchronously using an AsyncTask to gather
-                                // the Palette swatch information from the bitmap
-                                // Reference: @see "https://github.com/codepath/android_guides/wiki/Dynamic-Color-using-Palettes"
-                                // @see "https://developer.android.com/training/material/palette-colors#java"
-                                Palette.from(bitmap).maximumColorCount(12).generate(new Palette.PaletteAsyncListener() {
-                                    @Override
-                                    public void onGenerated(@NonNull Palette palette) {
-                                        Palette.Swatch vibrant = palette.getVibrantSwatch();
-                                        if (vibrant != null) {
-                                            mVibrantColor = vibrant.getRgb();
-                                            mRootView.findViewById(R.id.meta_bar)
-                                                    .setBackgroundColor(mVibrantColor);
-                                        }
-                                    }
-                                });
-                                mPhotoView.setImageBitmap(imageContainer.getBitmap());
-                                updateStatusBar();
-                            }
-                        }
-
-                        @Override
-                        public void onErrorResponse(VolleyError volleyError) {
-
-                        }
-                    });
+            // Use Picasso library to load the images
+            // Reference: @see "https://stackoverflow.com/questions/20181491/use-picasso-to-get-a-callback-with-a-bitmap"
+            Picasso.with(getActivity())
+                    .load(mCursor.getString(ArticleLoader.Query.PHOTO_URL))
+                    .into(mTarget);
 
             // Start the postponed transition in an OnPreDrawListener, which will be called after
             // the shared element has been measured and laid out.

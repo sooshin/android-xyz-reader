@@ -1,11 +1,15 @@
 package com.example.xyzreader.ui;
 
 import android.content.Context;
+import android.support.v7.widget.AppCompatImageView;
 import android.util.AttributeSet;
 
-import com.android.volley.toolbox.NetworkImageView;
-
-public class DynamicHeightNetworkImageView extends NetworkImageView {
+/**
+ * DynamicHeightNetworkImageView extends from AppCompatImageView to let Picasso know how to load it.
+ *
+ * Reference: @see "https://discussions.udacity.com/t/use-picasso-in-mainactivity/212390/5"
+ */
+public class DynamicHeightNetworkImageView extends AppCompatImageView {
     private float mAspectRatio = 1.5f;
 
     public DynamicHeightNetworkImageView(Context context) {
