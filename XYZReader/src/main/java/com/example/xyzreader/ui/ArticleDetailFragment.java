@@ -322,6 +322,7 @@ public class ArticleDetailFragment extends Fragment implements
             // Reference: @see "https://stackoverflow.com/questions/20181491/use-picasso-to-get-a-callback-with-a-bitmap"
             Picasso.with(getActivity())
                     .load(mCursor.getString(ArticleLoader.Query.PHOTO_URL))
+                    .error(R.drawable.photo_error)
                     .into(mTarget);
 
             // Start the postponed transition in an OnPreDrawListener, which will be called after

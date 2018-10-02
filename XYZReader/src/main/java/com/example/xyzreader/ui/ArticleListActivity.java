@@ -358,6 +358,7 @@ public class ArticleListActivity extends AppCompatActivity implements
             // Reference: @see "https://discussions.udacity.com/t/need-help-implementing-transition-animation/219077/9"
             Picasso.with(ArticleListActivity.this)
                     .load(mCursor.getString(ArticleLoader.Query.THUMB_URL))
+                    .error(R.drawable.photo_error)
                     .into(holder.thumbnailView);
             holder.thumbnailView.setAspectRatio(mCursor.getFloat(ArticleLoader.Query.ASPECT_RATIO));
             // Set unique transition name for each image
