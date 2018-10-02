@@ -1,5 +1,6 @@
 package com.example.xyzreader.ui;
 
+import android.annotation.TargetApi;
 import android.content.Intent;
 import android.database.Cursor;
 import android.graphics.Bitmap;
@@ -187,6 +188,11 @@ public class ArticleDetailFragment extends Fragment implements
             }
         });
 
+        // Hide FAB when the user scrolls down and show FAB when scrolling up the layout
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
+            hideFab();
+        }
+
         mPhotoView = mRootView.findViewById(R.id.photo);
 
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
@@ -213,6 +219,26 @@ public class ArticleDetailFragment extends Fragment implements
         bindViews();
         updateStatusBar();
         return mRootView;
+    }
+
+    /**
+     * Hide FAB when the user scrolls down and show FAB when scrolling up the layout.
+     * https://stackoverflow.com/questions/34560770/hide-fab-in-nestedscrollview-when-scrolling
+     */
+    @TargetApi(Build.VERSION_CODES.M)
+    private void hideFab() {
+        mScrollView.setOnScrollChangeListener(new View.OnScrollChangeListener() {
+            @Override
+            public void onScrollChange(View v, int scrollX, int scrollY, int oldScrollX, int oldScrollY) {
+                if (scrollY > oldScrollY) {
+                    // Hide FAB
+                    mRootView.findViewById(R.id.share_fab).setVisibility(View.INVISIBLE);
+                } else {
+                    // Show FAB
+                    mRootView.findViewById(R.id.share_fab).setVisibility(View.VISIBLE);
+                }
+            }
+        });
     }
 
     private void updateStatusBar() {
