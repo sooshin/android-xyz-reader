@@ -163,7 +163,11 @@ public class ArticleDetailActivity extends AppCompatActivity
         mUpButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                onSupportNavigateUp();
+                // Reverses the Activity Scene entry Transition and triggers the calling Activity
+                // to reverse its exit Transition.
+                // References: @see "https://stackoverflow.com/questions/37713793/shared-element-transition-when-using-actionbar-back-button"
+                // @see "https://discussions.udacity.com/t/transition-work-when-exiting-but-not-entering/207227/4"
+                supportFinishAfterTransition();
             }
         });
 
