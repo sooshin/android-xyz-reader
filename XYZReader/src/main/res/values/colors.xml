@@ -27,7 +27,7 @@
     <color name="theme_accent">#04561A</color>
     <color name="ltgray">#ffe0e0e0</color>
     <color name="color_title_text">#303f9f</color>
-    <color name="color_subtitle_text">#8bc34a</color>
+    <color name="color_subtitle_text">#26a69a</color>
 
     <!-- Text color for the article body -->
     <color name="color_body_text">#1b0000</color>
