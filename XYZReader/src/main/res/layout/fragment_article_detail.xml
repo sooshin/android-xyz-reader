@@ -27,7 +27,7 @@
 
                 <View
                     android:layout_width="match_parent"
-                    android:layout_height="112dp"
+                    android:layout_height="@dimen/detail_view_height"
                     android:background="@drawable/photo_background_protection" />
 
             </FrameLayout>
@@ -38,7 +38,7 @@
                 android:layout_gravity="center_horizontal"
                 android:layout_marginTop="@dimen/detail_card_top_margin"
                 android:background="#fff"
-                android:elevation="2dp"
+                android:elevation="@dimen/detail_max_width_elevation"
                 android:maxWidth="@dimen/detail_card_max_width"
                 android:orientation="vertical">
 

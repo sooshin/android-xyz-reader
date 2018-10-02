@@ -2,10 +2,10 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
-    android:layout_marginLeft="4dp"
-    android:layout_marginTop="4dp"
-    android:layout_marginRight="4dp"
-    android:layout_marginBottom="4dp"
+    android:layout_marginLeft="@dimen/card_margin"
+    android:layout_marginTop="@dimen/card_margin"
+    android:layout_marginRight="@dimen/card_margin"
+    android:layout_marginBottom="@dimen/card_margin"
     android:clickable="true"
     android:elevation="@dimen/card_elevation"
     android:focusable="true"
@@ -33,10 +33,10 @@
             android:ellipsize="end"
             android:fontFamily="@font/nunito_sans_bold"
             android:maxLines="4"
-            android:paddingLeft="16dp"
-            android:paddingTop="16dp"
-            android:paddingRight="16dp"
-            android:paddingBottom="4dp"
+            android:paddingLeft="@dimen/title_padding"
+            android:paddingTop="@dimen/title_padding"
+            android:paddingRight="@dimen/title_padding"
+            android:paddingBottom="@dimen/title_bottom_padding"
             android:textColor="@color/color_title_text" />
 
         <TextView
@@ -47,9 +47,9 @@
             android:ellipsize="end"
             android:fontFamily="@font/nunito_sans_regular"
             android:maxLines="2"
-            android:paddingLeft="16dp"
-            android:paddingRight="16dp"
-            android:paddingBottom="16dp"
+            android:paddingLeft="@dimen/subtitle_padding"
+            android:paddingRight="@dimen/subtitle_padding"
+            android:paddingBottom="@dimen/subtitle_padding"
             android:textColor="@color/color_subtitle_text" />
     </LinearLayout>
 

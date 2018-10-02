@@ -3,6 +3,8 @@
     <dimen name="detail_title_text_size">32sp</dimen>
     <dimen name="detail_body_text_size">22sp</dimen>
     <item name="detail_body_line_spacing_multiplier" format="float" type="fraction">1.25</item>
+    <dimen name="detail_view_height">112dp</dimen>
+    <dimen name="detail_max_width_elevation">2dp</dimen>
 
     <!-- FAB -->
     <dimen name="fab_elevation">6dp</dimen>
@@ -11,9 +13,19 @@
 
     <!-- CardView -->
     <dimen name="card_elevation">1dp</dimen>
+    <dimen name="card_margin">4dp</dimen>
 
     <!-- App bar -->
     <dimen name="appbar_elevation">4dp</dimen>
+    <dimen name="appbar_height">168dp</dimen>
+
+    <!-- Up button -->
+    <dimen name="up_width">56dp</dimen>
+
+    <!-- Margin used in list_item_article.xml -->
+    <dimen name="title_padding">16dp</dimen>
+    <dimen name="title_bottom_padding">4dp</dimen>
+    <dimen name="subtitle_padding">16dp</dimen>
 
     <!-- The size of image in the CollapsingToolbarLayout -->
     <dimen name="size_reading_image">110dp</dimen>
