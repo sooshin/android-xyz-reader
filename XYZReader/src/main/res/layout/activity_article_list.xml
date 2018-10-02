@@ -8,7 +8,8 @@
     <android.support.design.widget.AppBarLayout
         android:id="@+id/app_bar_layout"
         android:layout_width="match_parent"
-        android:layout_height="168dp">
+        android:layout_height="168dp"
+        android:elevation="@dimen/appbar_elevation">
 
         <android.support.design.widget.CollapsingToolbarLayout
             android:id="@+id/collapsing_toolbar_layout"
@@ -23,8 +24,8 @@
                 android:layout_width="@dimen/size_reading_image"
                 android:layout_height="@dimen/size_reading_image"
                 android:layout_gravity="bottom|end"
-                android:layout_marginBottom="@dimen/list_image_bottom_margin"
                 android:layout_marginEnd="@dimen/list_image_side_margin"
+                android:layout_marginBottom="@dimen/list_image_bottom_margin"
                 android:contentDescription="@string/reading_content_description"
                 android:scaleType="centerCrop"
                 android:src="@drawable/reading" />
@@ -63,9 +64,9 @@
             android:layout_height="match_parent"
             android:clipToPadding="false"
             android:layoutAnimation="@anim/layout_animation_from_bottom"
-            android:paddingBottom="28dp"
             android:paddingLeft="@dimen/list_side_margin"
             android:paddingRight="@dimen/list_side_margin"
+            android:paddingBottom="28dp"
             android:scrollbarStyle="outsideOverlay" />
     </android.support.v4.widget.SwipeRefreshLayout>
 
