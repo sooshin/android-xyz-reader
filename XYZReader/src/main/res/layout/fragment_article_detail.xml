@@ -33,6 +33,7 @@
             </FrameLayout>
 
             <com.example.xyzreader.ui.MaxWidthLinearLayout
+                android:id="@+id/max_width_layout"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_gravity="center_horizontal"
