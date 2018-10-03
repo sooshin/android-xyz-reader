@@ -14,4 +14,7 @@
 
     <!-- Transition name -->
     <string name="transition_photo">transition_photo</string>
+
+    <!-- Text to share-->
+    <string name="share_text_by">&#160;by&#160;</string>
 </resources>
