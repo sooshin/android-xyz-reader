@@ -22,6 +22,8 @@ import android.support.v7.widget.Toolbar;
 import android.text.Html;
 import android.text.format.DateUtils;
 import android.util.Log;
+import android.view.Menu;
+import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
 import android.view.ViewTreeObserver;
@@ -129,6 +131,9 @@ public class ArticleListActivity extends AppCompatActivity implements
             setExitSharedElementCallback(mCallback);
         }
         mToolbar = findViewById(R.id.toolbar);
+        // Set action bar to get the menu items to display in the toolbar
+        // Reference: @see "https://stackoverflow.com/questions/13267030/oncreateoptionsmenu-is-never-called"
+        setSupportActionBar(mToolbar);
 
         // Set the color scheme of the SwipeRefreshLayout and setup OnRefreshListener
         setSwipeRefreshLayout();
@@ -275,6 +280,26 @@ public class ArticleListActivity extends AppCompatActivity implements
     @Override
     public void onLoaderReset(@NonNull Loader<Cursor> loader) {
         mRecyclerView.setAdapter(null);
+    }
+
+    @Override
+    public boolean onCreateOptionsMenu(Menu menu) {
+        getMenuInflater().inflate(R.menu.main, menu);
+        return true;
+    }
+
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        int id = item.getItemId();
+        switch (id) {
+            case R.id.refresh:
+                refresh();
+                // Rerun the layout animation for RecyclerView
+                runLayoutAnimation(mRecyclerView);
+                return true;
+            default:
+                return super.onOptionsItemSelected(item);
+        }
     }
 
     private class Adapter extends RecyclerView.Adapter<ViewHolder> {

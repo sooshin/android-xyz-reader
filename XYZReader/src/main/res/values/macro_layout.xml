@@ -5,7 +5,7 @@
     <integer name="list_column_count">2</integer>
     <dimen name="list_bottom_margin">8dp</dimen>
     <!-- A margin for the reading image -->
-    <dimen name="list_image_side_margin">16dp</dimen>
+    <dimen name="list_image_side_margin">32dp</dimen>
     <dimen name="list_image_bottom_margin">16dp</dimen>
 
     <!-- detail -->

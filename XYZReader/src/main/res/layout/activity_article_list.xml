@@ -38,6 +38,7 @@
                 android:layout_marginLeft="@dimen/list_toolbar_side_margin"
                 android:layout_marginRight="@dimen/list_toolbar_side_margin"
                 app:layout_collapseMode="pin"
+                app:popupTheme="@style/Theme.AppCompat.DayNight"
                 app:theme="@style/ThemeOverlay.AppCompat.Dark.ActionBar">
 
                 <ImageView
