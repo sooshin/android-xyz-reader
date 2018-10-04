@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="utf-8"?>
+<PreferenceScreen xmlns:android="http://schemas.android.com/apk/res/android">
+
+    <ListPreference
+        android:defaultValue="@string/pref_page_animation_default"
+        android:entries="@array/pref_page_animation_options"
+        android:entryValues="@array/pref_page_animation_values"
+        android:key="@string/pref_page_animation_key"
+        android:title="@string/pref_page_animation_label" />
+
+</PreferenceScreen>

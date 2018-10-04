@@ -16,7 +16,8 @@
 
         <activity
             android:name=".ui.ArticleListActivity"
-            android:label="@string/app_name">
+            android:label="@string/app_name"
+            android:launchMode="singleTop">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
                 <category android:name="android.intent.category.LAUNCHER" />
@@ -36,6 +37,10 @@
                 android:name="android.support.PARENT_ACTIVITY"
                 android:value=".ui.ArticleListActivity" />
         </activity>
+
+        <activity
+            android:name=".ui.SettingsActivity"
+            android:theme="@style/Theme.Settings" />
 
         <service android:name=".data.UpdaterService"
             android:exported="false" />

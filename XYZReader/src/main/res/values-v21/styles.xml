@@ -21,6 +21,9 @@
         <item name="colorPrimaryDark">@color/colorPrimaryDark</item>
         <item name="colorAccent">@color/colorAccent</item>
 
+        <!-- Since we're using a PreferenceFragmentCompat library, we need to add a theme -->
+        <item name="preferenceTheme">@style/PreferenceThemeOverlay</item>
+
         <!-- Enable window content transitions -->
         <item name="android:windowContentTransitions">true</item>
         <item name="android:windowReenterTransition">@transition/main_reenter</item>

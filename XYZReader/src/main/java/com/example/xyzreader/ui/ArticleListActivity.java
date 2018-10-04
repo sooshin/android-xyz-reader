@@ -5,6 +5,7 @@ import android.content.BroadcastReceiver;
 import android.content.Context;
 import android.content.Intent;
 import android.content.IntentFilter;
+import android.content.SharedPreferences;
 import android.database.Cursor;
 import android.os.Build;
 import android.os.Bundle;
@@ -16,6 +17,7 @@ import android.support.v4.app.SharedElementCallback;
 import android.support.v4.content.Loader;
 import android.support.v4.widget.SwipeRefreshLayout;
 import android.support.v7.app.AppCompatActivity;
+import android.support.v7.preference.PreferenceManager;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.StaggeredGridLayoutManager;
 import android.support.v7.widget.Toolbar;
@@ -44,6 +46,10 @@ import java.util.GregorianCalendar;
 import java.util.List;
 import java.util.Map;
 
+import static com.example.xyzreader.ui.ArticleDetailActivity.CUBE;
+import static com.example.xyzreader.ui.ArticleDetailActivity.DEPTH;
+import static com.example.xyzreader.ui.ArticleDetailActivity.GATE;
+
 /**
  * An activity representing a list of Articles. This activity has different presentations for
  * handset and tablet-size devices. On handsets, the activity presents a list of items, which when
@@ -51,12 +57,17 @@ import java.util.Map;
  * activity presents a grid of items as cards.
  */
 public class ArticleListActivity extends AppCompatActivity implements
-        LoaderManager.LoaderCallbacks<Cursor> {
+        LoaderManager.LoaderCallbacks<Cursor>,
+        SharedPreferences.OnSharedPreferenceChangeListener {
 
     private static final String TAG = ArticleListActivity.class.toString();
     /** Key for Intent Extras */
     public static final String EXTRA_STARTING_POSITION = "extra_starting_position";
     public static final String EXTRA_CURRENT_POSITION = "extra_current_position";
+    public static final String EXTRA_PAGE_TRANSFORMATION = "extra_page_transformation";
+
+    /** Member variable for the PageTransformer string */
+    private String mPageTransformerStr;
 
     /** Bundle for result data from ArticleDetailActivity */
     private Bundle mReenterState;
@@ -144,6 +155,27 @@ public class ArticleListActivity extends AppCompatActivity implements
         if (savedInstanceState == null) {
             refresh();
         }
+
+        // Get a string for the page transformation currently set in Preferences
+        mPageTransformerStr = getPreferredPageTransformationStr();
+        // Register ArticleDetailActivity as an OnPreferenceChangedListener to receive a callback when a
+        // SharedPreference has changed. Please note that we must unregister MainActivity as an
+        // OnSharedPreferenceChanged listener in onDestroy to avoid any memory leaks.
+        PreferenceManager.getDefaultSharedPreferences(this)
+                .registerOnSharedPreferenceChangeListener(this);
+    }
+
+    /**
+     * Returns a string for the page transformation currently set in Preferences.
+     */
+    private String getPreferredPageTransformationStr() {
+        // Get all of the values from shared preferences to set it up
+        SharedPreferences prefs = PreferenceManager.getDefaultSharedPreferences(this);
+        // String for the key
+        String keyForPageAnimation = getString(R.string.pref_page_animation_key);
+        // String for the default value
+        String defaultPageAnimation = getString(R.string.pref_page_animation_default);
+        return prefs.getString(keyForPageAnimation, defaultPageAnimation);
     }
 
     /**
@@ -244,6 +276,14 @@ public class ArticleListActivity extends AppCompatActivity implements
         unregisterReceiver(mRefreshingReceiver);
     }
 
+    @Override
+    protected void onDestroy() {
+        super.onDestroy();
+        // Unregister ArticleListActivity as an OnPreferenceChangedListener to avoid any memory leaks
+        PreferenceManager.getDefaultSharedPreferences(this)
+                .unregisterOnSharedPreferenceChangeListener(this);
+    }
+
     private boolean mIsRefreshing = false;
 
     private BroadcastReceiver mRefreshingReceiver = new BroadcastReceiver() {
@@ -297,8 +337,36 @@ public class ArticleListActivity extends AppCompatActivity implements
                 // Rerun the layout animation for RecyclerView
                 runLayoutAnimation(mRecyclerView);
                 return true;
+            case R.id.action_settings:
+                // Launch Settings activity
+                Intent intent = new Intent(this, SettingsActivity.class);
+                startActivity(intent);
             default:
                 return super.onOptionsItemSelected(item);
+        }
+    }
+
+    /**
+     * Called when a shared preference is changed.
+     */
+    @Override
+    public void onSharedPreferenceChanged(SharedPreferences sharedPreferences, String key) {
+        if (key.equals(getString(R.string.pref_page_animation_key))) {
+            String pageAnimation = sharedPreferences
+                    .getString(key, getString(R.string.pref_page_animation_default));
+            switch (pageAnimation) {
+                case GATE:
+                    mPageTransformerStr = getString(R.string.pref_page_animation_gate);
+                    break;
+                case CUBE:
+                    mPageTransformerStr = getString(R.string.pref_page_animation_cube);
+                    break;
+                case DEPTH:
+                    mPageTransformerStr = getString(R.string.pref_page_animation_depth);
+                    break;
+                default:
+                    mPageTransformerStr = getString(R.string.pref_page_animation_gate);
+            }
         }
     }
 
@@ -327,6 +395,8 @@ public class ArticleListActivity extends AppCompatActivity implements
                             ItemsContract.Items.buildItemUri(getItemId(vh.getAdapterPosition())));
                     // Pass the starting position where the user clicks in the ArticleListActivity
                     intent.putExtra(EXTRA_STARTING_POSITION, vh.getAdapterPosition());
+                    // Pass the page transformer string
+                    intent.putExtra(EXTRA_PAGE_TRANSFORMATION, mPageTransformerStr);
 
                     if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
                         // Apply the shared element transition to the thumbnail image

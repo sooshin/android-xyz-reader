@@ -16,6 +16,7 @@ import android.support.v4.app.SharedElementCallback;
 import android.support.v4.content.Loader;
 import android.support.v4.view.ViewPager;
 import android.support.v7.app.AppCompatActivity;
+import android.text.TextUtils;
 import android.util.TypedValue;
 import android.view.View;
 import android.view.ViewGroup;
@@ -25,11 +26,14 @@ import android.widget.ImageView;
 import com.example.xyzreader.R;
 import com.example.xyzreader.data.ArticleLoader;
 import com.example.xyzreader.data.ItemsContract;
+import com.example.xyzreader.pagetransformer.CubeOutPageTransformer;
+import com.example.xyzreader.pagetransformer.DepthPageTransformer;
 
 import java.util.List;
 import java.util.Map;
 
 import static com.example.xyzreader.ui.ArticleListActivity.EXTRA_CURRENT_POSITION;
+import static com.example.xyzreader.ui.ArticleListActivity.EXTRA_PAGE_TRANSFORMATION;
 import static com.example.xyzreader.ui.ArticleListActivity.EXTRA_STARTING_POSITION;
 
 /**
@@ -40,6 +44,10 @@ public class ArticleDetailActivity extends AppCompatActivity
 
     /** Constant string for saving the current state of this Activity */
     private static final String STATE_CURRENT_PAGE_POSITION = "state_current_page_position";
+    /** Constant value used for the page transformation */
+    public static final String GATE = "gate";
+    public static final String CUBE = "cube";
+    public static final String DEPTH = "depth";
 
     private Cursor mCursor;
     private long mStartId;
@@ -60,6 +68,10 @@ public class ArticleDetailActivity extends AppCompatActivity
     private boolean mIsReturning;
     /** Member variable for ArticleDetailFragment */
     private ArticleDetailFragment mCurrentDetailFragment;
+    /** Member variable for PageTransformer */
+    private ViewPager.PageTransformer mPageTransformer;
+    /** A string for the page transformation currently set in Preferences */
+    private String mPageTransformerStr;
 
     /**
      * Monitor the Shared element transitions to match the transition name when the user changes
@@ -124,6 +136,9 @@ public class ArticleDetailActivity extends AppCompatActivity
             // Load the saved state
             mCurrentPosition = savedInstanceState.getInt(STATE_CURRENT_PAGE_POSITION);
         }
+
+        // Get the PageTransformer string via Intent
+        mPageTransformerStr = getIntent().getStringExtra(EXTRA_PAGE_TRANSFORMATION);
 
         getSupportLoaderManager().initLoader(0, null, this);
 
@@ -209,9 +224,10 @@ public class ArticleDetailActivity extends AppCompatActivity
         mPager.setCurrentItem(mCurrentPosition, false);
         mCursor.moveToPosition(mCurrentPosition);
 
-        // Apply GateTransformation to the page views using animation properties
-        // Reference: @see "https://github.com/dipanshukr/Viewpager-Transformation"
-        mPager.setPageTransformer(true, new GateTransformation());
+        // Apply Page Transformer to the page views using animation properties
+        // References: @see "https://github.com/dipanshukr/Viewpager-Transformation"
+        // @see "https://developer.android.com/training/animation/screen-slide#java"
+        mPager.setPageTransformer(true, getPageTransformer());
     }
 
     @Override
@@ -253,6 +269,28 @@ public class ArticleDetailActivity extends AppCompatActivity
         data.putExtra(EXTRA_CURRENT_POSITION, mCurrentPosition);
         setResult(RESULT_OK, data);
         super.finishAfterTransition();
+    }
+
+    /**
+     * Returns PageTransformer which provides animation needed for transforming ViewPager scrolling.
+     */
+    public ViewPager.PageTransformer getPageTransformer() {
+        if (!TextUtils.isEmpty(mPageTransformerStr)) {
+            switch (mPageTransformerStr) {
+                case GATE:
+                    mPageTransformer = new GateTransformation();
+                    break;
+                case CUBE:
+                    mPageTransformer = new CubeOutPageTransformer();
+                    break;
+                case DEPTH:
+                    mPageTransformer = new DepthPageTransformer();
+                    break;
+                default:
+                    mPageTransformer = new GateTransformation();
+            }
+        }
+        return mPageTransformer;
     }
 
     private class MyPagerAdapter extends FragmentStatePagerAdapter {
