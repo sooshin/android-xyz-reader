@@ -27,6 +27,7 @@ import com.example.xyzreader.R;
 import com.example.xyzreader.data.ArticleLoader;
 import com.example.xyzreader.data.ItemsContract;
 import com.example.xyzreader.pagetransformer.DepthPageTransformer;
+import com.example.xyzreader.pagetransformer.GatePageTransformer;
 import com.example.xyzreader.pagetransformer.ZoomOutPageTransformer;
 
 import java.util.List;
@@ -278,7 +279,7 @@ public class ArticleDetailActivity extends AppCompatActivity
         if (!TextUtils.isEmpty(mPageTransformerStr)) {
             switch (mPageTransformerStr) {
                 case GATE:
-                    mPageTransformer = new GateTransformation();
+                    mPageTransformer = new GatePageTransformer();
                     break;
                 case ZOOM:
                     mPageTransformer = new ZoomOutPageTransformer();
@@ -287,7 +288,7 @@ public class ArticleDetailActivity extends AppCompatActivity
                     mPageTransformer = new DepthPageTransformer();
                     break;
                 default:
-                    mPageTransformer = new GateTransformation();
+                    mPageTransformer = new GatePageTransformer();
             }
         }
         return mPageTransformer;
