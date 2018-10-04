@@ -12,4 +12,17 @@
         <item>@string/pref_page_animation_depth</item>
     </string-array>
 
+    <string-array name="pref_text_size_options">
+        <item>@string/pref_text_size_label_small</item>
+        <item>@string/pref_text_size_label_medium</item>
+        <item>@string/pref_text_size_label_large</item>
+        <item>@string/pref_text_size_label_extra_large</item>
+    </string-array>
+
+    <string-array name="pref_text_size_values">
+        <item>@string/pref_text_size_small</item>
+        <item>@string/pref_text_size_medium</item>
+        <item>@string/pref_text_size_large</item>
+        <item>@string/pref_text_size_extra_large</item>
+    </string-array>
 </resources>

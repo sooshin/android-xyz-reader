@@ -24,6 +24,7 @@ import android.support.v7.widget.Toolbar;
 import android.text.Html;
 import android.text.format.DateUtils;
 import android.util.Log;
+import android.util.TypedValue;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
@@ -47,7 +48,11 @@ import java.util.List;
 import java.util.Map;
 
 import static com.example.xyzreader.ui.ArticleDetailActivity.DEPTH;
+import static com.example.xyzreader.ui.ArticleDetailActivity.EXTRA_LARGE;
 import static com.example.xyzreader.ui.ArticleDetailActivity.GATE;
+import static com.example.xyzreader.ui.ArticleDetailActivity.LARGE;
+import static com.example.xyzreader.ui.ArticleDetailActivity.MEDIUM;
+import static com.example.xyzreader.ui.ArticleDetailActivity.SMALL;
 import static com.example.xyzreader.ui.ArticleDetailActivity.ZOOM;
 
 /**
@@ -65,9 +70,12 @@ public class ArticleListActivity extends AppCompatActivity implements
     public static final String EXTRA_STARTING_POSITION = "extra_starting_position";
     public static final String EXTRA_CURRENT_POSITION = "extra_current_position";
     public static final String EXTRA_PAGE_TRANSFORMATION = "extra_page_transformation";
+    public static final String EXTRA_TEXT_SIZE = "extra_text_size";
 
     /** Member variable for the PageTransformer string */
     private String mPageTransformerStr;
+    /** Member variable for text size - small, medium, large, extra_large */
+    private String mTextSizeStr;
 
     /** Bundle for result data from ArticleDetailActivity */
     private Bundle mReenterState;
@@ -158,6 +166,8 @@ public class ArticleListActivity extends AppCompatActivity implements
 
         // Get a string for the page transformation currently set in Preferences
         mPageTransformerStr = getPreferredPageTransformationStr();
+        // Get a string for the text size currently set in Preferences
+        mTextSizeStr = getPreferredTextSizeStr();
         // Register ArticleDetailActivity as an OnPreferenceChangedListener to receive a callback when a
         // SharedPreference has changed. Please note that we must unregister MainActivity as an
         // OnSharedPreferenceChanged listener in onDestroy to avoid any memory leaks.
@@ -176,6 +186,19 @@ public class ArticleListActivity extends AppCompatActivity implements
         // String for the default value
         String defaultPageAnimation = getString(R.string.pref_page_animation_default);
         return prefs.getString(keyForPageAnimation, defaultPageAnimation);
+    }
+
+    /**
+     * Returns a string for the text size currently set in Preferences.
+     */
+    private String getPreferredTextSizeStr() {
+        // Get all of the values from shared preferences to set it up
+        SharedPreferences prefs = PreferenceManager.getDefaultSharedPreferences(this);
+        // String for the key
+        String keyForTextSize = getString(R.string.pref_text_size_key);
+        // String for the default value
+        String defaultTextSize = getString(R.string.pref_text_size_default);
+        return prefs.getString(keyForTextSize, defaultTextSize);
     }
 
     /**
@@ -367,6 +390,26 @@ public class ArticleListActivity extends AppCompatActivity implements
                 default:
                     mPageTransformerStr = getString(R.string.pref_page_animation_gate);
             }
+
+        } else if (key.equals(getString(R.string.pref_text_size_key))) {
+            String textSize = sharedPreferences
+                    .getString(key, getString(R.string.pref_text_size_default));
+            switch (textSize) {
+                case SMALL:
+                    mTextSizeStr = getString(R.string.pref_text_size_small);
+                    break;
+                case MEDIUM:
+                    mTextSizeStr = getString(R.string.pref_text_size_medium);
+                    break;
+                case LARGE:
+                    mTextSizeStr = getString(R.string.pref_text_size_large);
+                    break;
+                case EXTRA_LARGE:
+                    mTextSizeStr = getString(R.string.pref_text_size_extra_large);
+                    break;
+                default:
+                    mTextSizeStr = getString(R.string.pref_text_size_medium);
+            }
         }
     }
 
@@ -397,6 +440,8 @@ public class ArticleListActivity extends AppCompatActivity implements
                     intent.putExtra(EXTRA_STARTING_POSITION, vh.getAdapterPosition());
                     // Pass the page transformer string
                     intent.putExtra(EXTRA_PAGE_TRANSFORMATION, mPageTransformerStr);
+                    // Pass the text size
+                    intent.putExtra(EXTRA_TEXT_SIZE, mTextSizeStr);
 
                     if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
                         // Apply the shared element transition to the thumbnail image
@@ -448,6 +493,10 @@ public class ArticleListActivity extends AppCompatActivity implements
                         + "<br/>" + " by "
                         + mCursor.getString(ArticleLoader.Query.AUTHOR)));
             }
+
+            // Set text size based on the Value in SharedPreferences
+            setTextSize(holder);
+
             // Use Picasso library to load the images
             // since the images load better when using Picasso instead of the ImageLoaderHelper
             // Reference: @see "https://discussions.udacity.com/t/need-help-implementing-transition-animation/219077/9"
@@ -479,6 +528,33 @@ public class ArticleListActivity extends AppCompatActivity implements
             thumbnailView = view.findViewById(R.id.thumbnail);
             titleView = view.findViewById(R.id.article_title);
             subtitleView = view.findViewById(R.id.article_subtitle);
+        }
+    }
+
+    /**
+     * Set text size based on the Value in SharedPreferences.
+     */
+    private void setTextSize(ViewHolder holder) {
+        if (mTextSizeStr.equals(getString(R.string.pref_text_size_small))) {
+            holder.titleView.setTextSize(TypedValue.COMPLEX_UNIT_PX, holder.itemView.getContext()
+                    .getResources().getDimension(R.dimen.sp14));
+            holder.subtitleView.setTextSize(TypedValue.COMPLEX_UNIT_PX, holder.itemView.getContext()
+                    .getResources().getDimension(R.dimen.sp12));
+        } else if (mTextSizeStr.equals(getString(R.string.pref_text_size_medium))) {
+            holder.titleView.setTextSize(TypedValue.COMPLEX_UNIT_PX, holder.itemView.getContext()
+                    .getResources().getDimension(R.dimen.sp16));
+            holder.subtitleView.setTextSize(TypedValue.COMPLEX_UNIT_PX, holder.itemView.getContext()
+                    .getResources().getDimension(R.dimen.sp14));
+        } else if (mTextSizeStr.equals(getString(R.string.pref_text_size_large))) {
+            holder.titleView.setTextSize(TypedValue.COMPLEX_UNIT_PX, holder.itemView.getContext()
+                    .getResources().getDimension(R.dimen.sp18));
+            holder.subtitleView.setTextSize(TypedValue.COMPLEX_UNIT_PX, holder.itemView.getContext()
+                    .getResources().getDimension(R.dimen.sp16));
+        } else if (mTextSizeStr.equals(getString(R.string.pref_text_size_extra_large))) {
+            holder.titleView.setTextSize(TypedValue.COMPLEX_UNIT_PX, holder.itemView.getContext()
+                    .getResources().getDimension(R.dimen.sp20));
+            holder.subtitleView.setTextSize(TypedValue.COMPLEX_UNIT_PX, holder.itemView.getContext()
+                    .getResources().getDimension(R.dimen.sp18));
         }
     }
 }

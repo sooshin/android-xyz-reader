@@ -49,6 +49,11 @@ public class ArticleDetailActivity extends AppCompatActivity
     public static final String GATE = "gate";
     public static final String ZOOM = "zoom";
     public static final String DEPTH = "depth";
+    /** Constant value used for the text size */
+    public static final String SMALL = "small";
+    public static final String MEDIUM = "medium";
+    public static final String LARGE = "large";
+    public static final String EXTRA_LARGE = "extra_large";
 
     private Cursor mCursor;
     private long mStartId;

@@ -8,4 +8,10 @@
         android:key="@string/pref_page_animation_key"
         android:title="@string/pref_page_animation_label" />
 
+    <ListPreference
+        android:defaultValue="@string/pref_text_size_default"
+        android:entries="@array/pref_text_size_options"
+        android:entryValues="@array/pref_text_size_values"
+        android:key="@string/pref_text_size_key"
+        android:title="@string/pref_text_size_label" />
 </PreferenceScreen>

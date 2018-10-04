@@ -22,6 +22,7 @@ import android.text.Html;
 import android.text.format.DateUtils;
 import android.text.method.LinkMovementMethod;
 import android.util.Log;
+import android.util.TypedValue;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -39,6 +40,8 @@ import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.GregorianCalendar;
 
+import static com.example.xyzreader.ui.ArticleListActivity.EXTRA_TEXT_SIZE;
+
 /**
  * A fragment representing a single Article detail screen. This fragment is
  * either contained in a {@link ArticleListActivity} in two-pane mode (on
@@ -52,6 +55,9 @@ public class ArticleDetailFragment extends Fragment implements
 
     private int mPosition;
     private int mStartingPosition;
+
+    /** A string for the text size currently set in Preferences */
+    private String mTextSizeStr;
 
     public static final String ARG_ITEM_ID = "item_id";
     private static final float PARALLAX_FACTOR = 1.25f;
@@ -193,6 +199,9 @@ public class ArticleDetailFragment extends Fragment implements
             hideFab();
         }
 
+        // Get the text size string via Intent
+        mTextSizeStr = getActivityCast().getIntent().getStringExtra(EXTRA_TEXT_SIZE);
+
         mPhotoView = mRootView.findViewById(R.id.photo);
 
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
@@ -294,6 +303,9 @@ public class ArticleDetailFragment extends Fragment implements
         bylineView.setMovementMethod(new LinkMovementMethod());
         TextView bodyView = mRootView.findViewById(R.id.article_body);
 
+        // Set text size based on the Value in SharedPreferences
+        setBodyTextSize(bodyView);
+
         if (mCursor != null) {
             mRootView.setAlpha(0);
             mRootView.setVisibility(View.VISIBLE);
@@ -336,6 +348,25 @@ public class ArticleDetailFragment extends Fragment implements
             titleView.setText("N/A");
             bylineView.setText("N/A" );
             bodyView.setText("N/A");
+        }
+    }
+
+    /**
+     * Set text size based on the Value in SharedPreferences.
+     */
+    private void setBodyTextSize(TextView textView) {
+        if (mTextSizeStr.equals(getString(R.string.pref_text_size_small))) {
+            textView.setTextSize(TypedValue.COMPLEX_UNIT_PX, getActivityCast()
+                    .getResources().getDimension(R.dimen.sp18));
+        } else if (mTextSizeStr.equals(getString(R.string.pref_text_size_medium))) {
+            textView.setTextSize(TypedValue.COMPLEX_UNIT_PX, getActivityCast()
+                    .getResources().getDimension(R.dimen.sp20));
+        } else if (mTextSizeStr.equals(getString(R.string.pref_text_size_large))) {
+            textView.setTextSize(TypedValue.COMPLEX_UNIT_PX, getActivityCast()
+                    .getResources().getDimension(R.dimen.sp22));
+        } else if (mTextSizeStr.equals(getString(R.string.pref_text_size_extra_large))) {
+            textView.setTextSize(TypedValue.COMPLEX_UNIT_PX, getActivityCast()
+                    .getResources().getDimension(R.dimen.sp24));
         }
     }
 
