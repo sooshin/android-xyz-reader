@@ -46,9 +46,9 @@ import java.util.GregorianCalendar;
 import java.util.List;
 import java.util.Map;
 
-import static com.example.xyzreader.ui.ArticleDetailActivity.CUBE;
 import static com.example.xyzreader.ui.ArticleDetailActivity.DEPTH;
 import static com.example.xyzreader.ui.ArticleDetailActivity.GATE;
+import static com.example.xyzreader.ui.ArticleDetailActivity.ZOOM;
 
 /**
  * An activity representing a list of Articles. This activity has different presentations for
@@ -358,8 +358,8 @@ public class ArticleListActivity extends AppCompatActivity implements
                 case GATE:
                     mPageTransformerStr = getString(R.string.pref_page_animation_gate);
                     break;
-                case CUBE:
-                    mPageTransformerStr = getString(R.string.pref_page_animation_cube);
+                case ZOOM:
+                    mPageTransformerStr = getString(R.string.pref_page_animation_zoom);
                     break;
                 case DEPTH:
                     mPageTransformerStr = getString(R.string.pref_page_animation_depth);

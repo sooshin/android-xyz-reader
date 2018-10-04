@@ -2,13 +2,13 @@
 <resources>
     <string-array name="pref_page_animation_options">
         <item>@string/pref_page_animation_label_gate</item>
-        <item>@string/pref_page_animation_label_cube</item>
+        <item>@string/pref_page_animation_label_zoom</item>
         <item>@string/pref_page_animation_label_depth</item>
     </string-array>
 
     <string-array name="pref_page_animation_values">
         <item>@string/pref_page_animation_gate</item>
-        <item>@string/pref_page_animation_cube</item>
+        <item>@string/pref_page_animation_zoom</item>
         <item>@string/pref_page_animation_depth</item>
     </string-array>
 

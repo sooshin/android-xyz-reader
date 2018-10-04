@@ -26,8 +26,8 @@ import android.widget.ImageView;
 import com.example.xyzreader.R;
 import com.example.xyzreader.data.ArticleLoader;
 import com.example.xyzreader.data.ItemsContract;
-import com.example.xyzreader.pagetransformer.CubeOutPageTransformer;
 import com.example.xyzreader.pagetransformer.DepthPageTransformer;
+import com.example.xyzreader.pagetransformer.ZoomOutPageTransformer;
 
 import java.util.List;
 import java.util.Map;
@@ -46,7 +46,7 @@ public class ArticleDetailActivity extends AppCompatActivity
     private static final String STATE_CURRENT_PAGE_POSITION = "state_current_page_position";
     /** Constant value used for the page transformation */
     public static final String GATE = "gate";
-    public static final String CUBE = "cube";
+    public static final String ZOOM = "zoom";
     public static final String DEPTH = "depth";
 
     private Cursor mCursor;
@@ -280,8 +280,8 @@ public class ArticleDetailActivity extends AppCompatActivity
                 case GATE:
                     mPageTransformer = new GateTransformation();
                     break;
-                case CUBE:
-                    mPageTransformer = new CubeOutPageTransformer();
+                case ZOOM:
+                    mPageTransformer = new ZoomOutPageTransformer();
                     break;
                 case DEPTH:
                     mPageTransformer = new DepthPageTransformer();

@@ -36,8 +36,8 @@
     <!-- Label for gate transformation option in page animation preference -->
     <string name="pref_page_animation_label_gate">Gate </string>
 
-    <!-- Label for cube out transformation option in page animation preference -->
-    <string name="pref_page_animation_label_cube">Cube</string>
+    <!-- Label for zoom out transformation option in page animation preference -->
+    <string name="pref_page_animation_label_zoom">Zoom</string>
 
     <!-- Label for depth transformation option in page animation preference -->
     <string name="pref_page_animation_label_depth">Depth</string>
@@ -45,8 +45,8 @@
     <!-- Value in SharedPreferences for gate option -->
     <string name="pref_page_animation_gate" translatable="false">gate</string>
 
-    <!-- Value in SharedPreferences for cube option -->
-    <string name="pref_page_animation_cube" translatable="false">cube</string>
+    <!-- Value in SharedPreferences for zoom option -->
+    <string name="pref_page_animation_zoom" translatable="false">zoom</string>
 
     <!-- Value in SharedPreferences for depth option -->
     <string name="pref_page_animation_depth" translatable="false">depth</string>
