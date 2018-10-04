@@ -32,10 +32,12 @@
         <item name="colorAccent">@color/colorAccent</item>
     </style>
 
+    <!-- SettingsActivity theme -->
     <style name="Theme.Settings" parent="BaseTheme">
     </style>
 
-    <style name="BaseTheme" parent="Theme.AppCompat.Light.DarkActionBar">
+    <!-- Convert to a dialog at sw600dp -->
+    <style name="BaseTheme" parent="Theme.AppCompat.Light.Dialog.Alert">
         <item name="colorPrimary">@color/colorPrimary</item>
         <item name="colorPrimaryDark">@color/colorPrimaryDark</item>
         <item name="colorAccent">@color/colorAccent</item>
