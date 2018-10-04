@@ -8,7 +8,7 @@
     <string name="action_share">Share</string>
 
     <string name="up">Up</string>
-    <!-- Content description for Settings -->
+    <!-- Label and Content description for Settings -->
     <string name="settings">Settings</string>
 
     <!-- Content description for the ImageView -->

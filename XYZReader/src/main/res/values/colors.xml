@@ -35,6 +35,9 @@
     <!-- Background color for meta_bar -->
     <color name="color_meta_bar">#006F7A</color>
 
+    <!-- Background color for Settings activity -->
+    <color name="color_pref_background">#e3f2fd</color>
+
     <color name="color_swipe_deep_purple">#7C4DFF</color>
     <color name="color_swipe_red">#FF584B</color>
 </resources>
