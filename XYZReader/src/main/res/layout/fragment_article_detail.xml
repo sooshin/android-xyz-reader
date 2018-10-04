@@ -88,7 +88,6 @@
                     android:paddingBottom="@dimen/detail_body_bottom_margin"
                     android:textColor="@color/color_body_text"
                     android:textColorLink="@color/theme_accent"
-                    android:textIsSelectable="true"
                     android:textSize="@dimen/detail_body_text_size" />
 
             </com.example.xyzreader.ui.MaxWidthLinearLayout>

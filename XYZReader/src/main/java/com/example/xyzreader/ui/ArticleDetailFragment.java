@@ -306,6 +306,9 @@ public class ArticleDetailFragment extends Fragment implements
         // Set text size based on the Value in SharedPreferences
         setBodyTextSize(bodyView);
 
+        // Make bodyView selectable on long click
+        setBodyTextSelectable(bodyView);
+
         if (mCursor != null) {
             mRootView.setAlpha(0);
             mRootView.setVisibility(View.VISIBLE);
@@ -368,6 +371,21 @@ public class ArticleDetailFragment extends Fragment implements
             textView.setTextSize(TypedValue.COMPLEX_UNIT_PX, getActivityCast()
                     .getResources().getDimension(R.dimen.sp24));
         }
+    }
+
+    /**
+     * This method allows the user to select body text when the user performs the long click.
+     * If setting text to be selectable without setting OnLongClickListener, one click on the
+     * TextView will scroll right away, so set it inside setOnLongClickListener to avoid this.
+     */
+    private void setBodyTextSelectable(final TextView textView) {
+        textView.setOnLongClickListener(new View.OnLongClickListener() {
+            @Override
+            public boolean onLongClick(View v) {
+                textView.setTextIsSelectable(true);
+                return false;
+            }
+        });
     }
 
     /**
