@@ -26,6 +26,7 @@ import android.widget.ImageView;
 import com.example.xyzreader.R;
 import com.example.xyzreader.data.ArticleLoader;
 import com.example.xyzreader.data.ItemsContract;
+import com.example.xyzreader.pagetransformer.CubeOutPageTransformer;
 import com.example.xyzreader.pagetransformer.DepthPageTransformer;
 import com.example.xyzreader.pagetransformer.GatePageTransformer;
 import com.example.xyzreader.pagetransformer.ZoomOutPageTransformer;
@@ -50,6 +51,7 @@ public class ArticleDetailActivity extends AppCompatActivity
     public static final String GATE = "gate";
     public static final String ZOOM = "zoom";
     public static final String DEPTH = "depth";
+    public static final String CUBE = "cube";
     /** Constant value used for the text size */
     public static final String SMALL = "small";
     public static final String MEDIUM = "medium";
@@ -294,6 +296,9 @@ public class ArticleDetailActivity extends AppCompatActivity
                     break;
                 case DEPTH:
                     mPageTransformer = new DepthPageTransformer();
+                    break;
+                case CUBE:
+                    mPageTransformer = new CubeOutPageTransformer();
                     break;
                 default:
                     mPageTransformer = new GatePageTransformer();

@@ -14,9 +14,9 @@ import static com.example.xyzreader.pagetransformer.DepthPageTransformer.ALPHA_Z
  */
 public class GatePageTransformer implements ViewPager.PageTransformer {
 
-    private static final int ROTATION_NINETY = 90;
-    private static final int ROTATION_NINETY_N = -90;
-    private static final int PIVOT_X = 0;
+    static final int ROTATION_NINETY = 90;
+    static final int ROTATION_NINETY_N = -90;
+    static final int PIVOT_X = 0;
 
     @Override
     public void transformPage(@NonNull View page, float position) {

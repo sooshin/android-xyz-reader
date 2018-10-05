@@ -51,6 +51,7 @@ import java.util.GregorianCalendar;
 import java.util.List;
 import java.util.Map;
 
+import static com.example.xyzreader.ui.ArticleDetailActivity.CUBE;
 import static com.example.xyzreader.ui.ArticleDetailActivity.DEPTH;
 import static com.example.xyzreader.ui.ArticleDetailActivity.EXTRA_LARGE;
 import static com.example.xyzreader.ui.ArticleDetailActivity.GATE;
@@ -400,6 +401,9 @@ public class ArticleListActivity extends AppCompatActivity implements
                     break;
                 case DEPTH:
                     mPageTransformerStr = getString(R.string.pref_page_animation_depth);
+                    break;
+                case CUBE:
+                    mPageTransformerStr = getString(R.string.pref_page_animation_cube);
                     break;
                 default:
                     mPageTransformerStr = getString(R.string.pref_page_animation_gate);
