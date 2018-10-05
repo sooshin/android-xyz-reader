@@ -102,7 +102,7 @@ public class ArticleDetailFragment extends Fragment implements
                 // @see "https://developer.android.com/training/material/palette-colors#java"
                 Palette.from(bitmap).maximumColorCount(12).generate(new Palette.PaletteAsyncListener() {
                     @Override
-                    public void onGenerated(@NonNull Palette palette) {
+                    public void onGenerated(Palette palette) {
                         Palette.Swatch vibrant = palette.getVibrantSwatch();
                         if (vibrant != null) {
                             mVibrantColor = vibrant.getRgb();
