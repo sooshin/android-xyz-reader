@@ -217,6 +217,8 @@ public class ArticleListActivity extends AppCompatActivity implements
                 refresh();
                 // Rerun the layout animation for RecyclerView
                 runLayoutAnimation(mRecyclerView);
+                // Hide refresh progress to signal refresh has finished
+                mSwipeRefreshLayout.setRefreshing(false);
             }
         });
     }
