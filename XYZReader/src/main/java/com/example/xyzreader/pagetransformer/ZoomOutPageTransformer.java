@@ -14,6 +14,7 @@ public class ZoomOutPageTransformer implements ViewPager.PageTransformer{
     private static final float MIN_SCALE = 0.85f;
     private static final float MIN_ALPHA = 0.5f;
     private static final float ALPHA_ZERO = 0f;
+    private static final int NUMBER_TWO = 2;
 
     public void transformPage(@NonNull View view, float position) {
         int pageWidth = view.getWidth();
@@ -26,12 +27,12 @@ public class ZoomOutPageTransformer implements ViewPager.PageTransformer{
         } else if (position <= 1) { // [-1,1]
             // Modify the default slide transition to shrink the page as well
             float scaleFactor = Math.max(MIN_SCALE, 1 - Math.abs(position));
-            float vertMargin = pageHeight * (1 - scaleFactor) / 2;
-            float horzMargin = pageWidth * (1 - scaleFactor) / 2;
+            float vertMargin = pageHeight * (1 - scaleFactor) / NUMBER_TWO;
+            float horzMargin = pageWidth * (1 - scaleFactor) / NUMBER_TWO;
             if (position < 0) {
-                view.setTranslationX(horzMargin - vertMargin / 2);
+                view.setTranslationX(horzMargin - vertMargin / NUMBER_TWO);
             } else {
-                view.setTranslationX(-horzMargin + vertMargin / 2);
+                view.setTranslationX(-horzMargin + vertMargin / NUMBER_TWO);
             }
 
             // Scale the page down (between MIN_SCALE and 1)

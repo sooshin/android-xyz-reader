@@ -32,15 +32,16 @@ public class ItemsContract {
 		public static final String CONTENT_ITEM_TYPE = "vnd.android.cursor.item/vnd.com.example.xyzreader.items";
 
         public static final String DEFAULT_SORT = PUBLISHED_DATE + " DESC";
+        public static final String ITEMS = "items";
 
 		/** Matches: /items/ */
 		public static Uri buildDirUri() {
-			return BASE_URI.buildUpon().appendPath("items").build();
+			return BASE_URI.buildUpon().appendPath(ITEMS).build();
 		}
 
 		/** Matches: /items/[_id]/ */
 		public static Uri buildItemUri(long _id) {
-			return BASE_URI.buildUpon().appendPath("items").appendPath(Long.toString(_id)).build();
+			return BASE_URI.buildUpon().appendPath(ITEMS).appendPath(Long.toString(_id)).build();
 		}
 
         /** Read item ID item detail URI. */

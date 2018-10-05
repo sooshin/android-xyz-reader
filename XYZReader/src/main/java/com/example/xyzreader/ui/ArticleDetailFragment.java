@@ -59,6 +59,10 @@ public class ArticleDetailFragment extends Fragment implements
     /** A string for the text size currently set in Preferences */
     private String mTextSizeStr;
 
+    /** Index value for substring method */
+    private static final int START_INDEX = 0;
+    private static final int END_INDEX = 1000;
+
     public static final String ARG_ITEM_ID = "item_id";
     private static final float PARALLAX_FACTOR = 1.25f;
 
@@ -76,6 +80,10 @@ public class ArticleDetailFragment extends Fragment implements
     private int mScrollY;
     private boolean mIsCard = false;
     private int mStatusBarFullOpacityBottom;
+
+    private static final String BY_FONT_COLOR = " by <font color='#ffffff'>";
+    private static final String FONT = "</font>";
+    private static final String REPLACEMENT_BR = "<br />";
 
     private SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ss.sss");
     // Use default locale format
@@ -321,21 +329,21 @@ public class ArticleDetailFragment extends Fragment implements
                                 publishedDate.getTime(),
                                 System.currentTimeMillis(), DateUtils.HOUR_IN_MILLIS,
                                 DateUtils.FORMAT_ABBREV_ALL).toString()
-                                + " by <font color='#ffffff'>"
+                                + BY_FONT_COLOR
                                 + mCursor.getString(ArticleLoader.Query.AUTHOR)
-                                + "</font>"));
+                                + FONT));
 
             } else {
                 // If date is before 1902, just show the string
                 bylineView.setText(Html.fromHtml(
-                        outputFormat.format(publishedDate) + " by <font color='#ffffff'>"
+                        outputFormat.format(publishedDate) + BY_FONT_COLOR
                         + mCursor.getString(ArticleLoader.Query.AUTHOR)
-                                + "</font>"));
+                                + FONT));
 
             }
             // Truncate the text to avoid a delay with the transition
             bodyView.setText(Html.fromHtml(mCursor.getString(ArticleLoader.Query.BODY)
-                    .substring(0, 1000).replaceAll("(\r\n|\n)", "<br />")));
+                    .substring(START_INDEX, END_INDEX).replaceAll("(\r\n|\n)", REPLACEMENT_BR)));
             // Use Picasso library to load the images
             // Reference: @see "https://stackoverflow.com/questions/20181491/use-picasso-to-get-a-callback-with-a-bitmap"
             Picasso.with(getActivity())

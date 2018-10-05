@@ -95,6 +95,8 @@ public class ArticleListActivity extends AppCompatActivity implements
     // Most time functions can only handle 1902 - 2037
     private GregorianCalendar START_OF_EPOCH = new GregorianCalendar(2,1,1);
 
+    public static final int XYZ_LOADER_ID = 0;
+
     /**
      * Monitor the Shared element transitions.
      *
@@ -168,7 +170,7 @@ public class ArticleListActivity extends AppCompatActivity implements
         setSwipeRefreshLayout();
 
         mRecyclerView = findViewById(R.id.recycler_view);
-        getSupportLoaderManager().initLoader(0, null, this);
+        getSupportLoaderManager().initLoader(XYZ_LOADER_ID, null, this);
 
         if (savedInstanceState == null) {
             refresh();

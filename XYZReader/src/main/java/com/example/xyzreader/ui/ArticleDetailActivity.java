@@ -36,6 +36,7 @@ import java.util.Map;
 import static com.example.xyzreader.ui.ArticleListActivity.EXTRA_CURRENT_POSITION;
 import static com.example.xyzreader.ui.ArticleListActivity.EXTRA_PAGE_TRANSFORMATION;
 import static com.example.xyzreader.ui.ArticleListActivity.EXTRA_STARTING_POSITION;
+import static com.example.xyzreader.ui.ArticleListActivity.XYZ_LOADER_ID;
 
 /**
  * An activity representing a single Article detail screen, letting you swipe between articles.
@@ -54,6 +55,8 @@ public class ArticleDetailActivity extends AppCompatActivity
     public static final String MEDIUM = "medium";
     public static final String LARGE = "large";
     public static final String EXTRA_LARGE = "extra_large";
+
+    public static final int ANIM_DURATION = 300;
 
     private Cursor mCursor;
     private long mStartId;
@@ -146,7 +149,7 @@ public class ArticleDetailActivity extends AppCompatActivity
         // Get the PageTransformer string via Intent
         mPageTransformerStr = getIntent().getStringExtra(EXTRA_PAGE_TRANSFORMATION);
 
-        getSupportLoaderManager().initLoader(0, null, this);
+        getSupportLoaderManager().initLoader(XYZ_LOADER_ID, null, this);
 
         mPagerAdapter = new MyPagerAdapter(getSupportFragmentManager());
         mPager = findViewById(R.id.pager);
@@ -162,7 +165,7 @@ public class ArticleDetailActivity extends AppCompatActivity
                 super.onPageScrollStateChanged(state);
                 mUpButton.animate()
                         .alpha((state == ViewPager.SCROLL_STATE_IDLE) ? 1f : 0f)
-                        .setDuration(300);
+                        .setDuration(ANIM_DURATION);
             }
 
             @Override
