@@ -216,7 +216,6 @@ public class ArticleDetailFragment extends Fragment implements
             // Make sure the Fragments are using the same transition name
             String transitionName = getString(R.string.transition_photo) + mPosition;
             mPhotoView.setTransitionName(transitionName);
-            Log.v(TAG, "transition Name: " + transitionName);
         }
 
         mPhotoContainerView = mRootView.findViewById(R.id.photo_container);

@@ -116,8 +116,6 @@ public class ArticleListActivity extends AppCompatActivity implements
                 // Get the starting position and the current position
                 int startingPosition = mReenterState.getInt(EXTRA_STARTING_POSITION);
                 int currentPosition = mReenterState.getInt(EXTRA_CURRENT_POSITION);
-                Log.v(TAG, "starting: " + startingPosition);
-                Log.v(TAG, "current: " + currentPosition);
                 if (startingPosition != currentPosition) {
                     // If startingPosition is not equal to currentPosition, the user must have swiped to a
                     // different page in the ArticleDetailActivity. We must update the shared element
@@ -268,8 +266,6 @@ public class ArticleListActivity extends AppCompatActivity implements
         mReenterState = new Bundle(data.getExtras());
         int startingPosition = mReenterState.getInt(EXTRA_STARTING_POSITION);
         int currentPosition = mReenterState.getInt(EXTRA_CURRENT_POSITION);
-        Log.v(TAG, "startingPosition: " + startingPosition);
-        Log.v(TAG, "currentPosition: " + currentPosition);
         if (startingPosition != currentPosition) {
             // Scroll to the current position
             mRecyclerView.scrollToPosition(currentPosition);
@@ -491,7 +487,6 @@ public class ArticleListActivity extends AppCompatActivity implements
                         // Apply the shared element transition to the thumbnail image
                         // Reference: @see "https://discussions.udacity.com/t/trouble-implementing-shared-element-transition/674912/2"
                         String transitionName = vh.thumbnailView.getTransitionName();
-                        Log.v(TAG, "transition Name: " + transitionName);
                         Bundle bundle = ActivityOptionsCompat.makeSceneTransitionAnimation(
                                 ArticleListActivity.this,
                                 vh.thumbnailView,
