@@ -8,7 +8,7 @@ import static com.example.xyzreader.pagetransformer.DepthPageTransformer.ALPHA_O
 import static com.example.xyzreader.pagetransformer.DepthPageTransformer.ALPHA_ZERO;
 
 /**
- * A GateTransformer is invoked whenever a visible/attached page is scrolled.
+ * A GatePageTransformer provides gate animation needed for transforming ViewPager scrolling.
  *
  * Reference: @see "https://github.com/dipanshukr/Viewpager-Transformation/wiki/Gate-Transformation"
  */
