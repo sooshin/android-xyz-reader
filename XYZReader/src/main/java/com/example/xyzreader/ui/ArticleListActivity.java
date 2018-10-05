@@ -7,9 +7,13 @@ import android.content.Intent;
 import android.content.IntentFilter;
 import android.content.SharedPreferences;
 import android.database.Cursor;
+import android.net.ConnectivityManager;
+import android.net.NetworkInfo;
 import android.os.Build;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
+import android.support.design.widget.CoordinatorLayout;
+import android.support.design.widget.Snackbar;
 import android.support.v4.app.ActivityCompat;
 import android.support.v4.app.ActivityOptionsCompat;
 import android.support.v4.app.LoaderManager;
@@ -83,6 +87,7 @@ public class ArticleListActivity extends AppCompatActivity implements
     private Toolbar mToolbar;
     private SwipeRefreshLayout mSwipeRefreshLayout;
     private RecyclerView mRecyclerView;
+    private CoordinatorLayout mCoordinatorLayout;
 
     private SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ss.sss");
     // Use default locale format
@@ -149,6 +154,11 @@ public class ArticleListActivity extends AppCompatActivity implements
             // SharedElementCallback will be called to handle shared elements on the launching Activity
             setExitSharedElementCallback(mCallback);
         }
+
+        mCoordinatorLayout = findViewById(R.id.coordinator);
+        // Show a snackbar message to indicate the network status
+        showSnackbar(isConnected());
+
         mToolbar = findViewById(R.id.toolbar);
         // Set action bar to get the menu items to display in the toolbar
         // Reference: @see "https://stackoverflow.com/questions/13267030/oncreateoptionsmenu-is-never-called"
@@ -413,6 +423,32 @@ public class ArticleListActivity extends AppCompatActivity implements
                     mTextSizeStr = getString(R.string.pref_text_size_medium);
             }
         }
+    }
+
+    /**
+     * Returns true if there is the network connectivity.
+     */
+    private boolean isConnected() {
+        // Get a reference to the ConnectivityManager to check state of network connectivity
+        ConnectivityManager connectivityManager = (ConnectivityManager)
+                getSystemService(Context.CONNECTIVITY_SERVICE);
+        // Get details on the currently active default data network
+        NetworkInfo networkInfo = connectivityManager.getActiveNetworkInfo();
+        return networkInfo != null && networkInfo.isConnected();
+    }
+
+    /**
+     * Show a snackbar message to indicate the network status.
+     * @param isConnected True if connected to the network
+     */
+    private void showSnackbar(boolean isConnected) {
+        String snackMessage;
+        if (isConnected) {
+            snackMessage = getString(R.string.snackbar_online);
+        } else {
+            snackMessage = getString(R.string.snackbar_offline);
+        }
+        Snackbar.make(mCoordinatorLayout, snackMessage, Snackbar.LENGTH_LONG).show();
     }
 
     private class Adapter extends RecyclerView.Adapter<ViewHolder> {

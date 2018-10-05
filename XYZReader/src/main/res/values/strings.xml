@@ -19,6 +19,10 @@
 
     <!-- Text to share-->
     <string name="share_text_by">&#160;by&#160;</string>
+
+    <!-- Snackbar message -->
+    <string name="snackbar_online">Connected to the Internet</string>
+    <string name="snackbar_offline">You\'re offline. Check your connection!</string>
     
     <!-- - - - - - - - - - - - - - - - - - 
       - Used by XYZReaderPreferences -
