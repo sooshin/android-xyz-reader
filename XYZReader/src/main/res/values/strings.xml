@@ -23,6 +23,7 @@
     <!-- Snackbar message -->
     <string name="snackbar_online">Connected to the Internet</string>
     <string name="snackbar_offline">You\'re offline. Check your connection!</string>
+    <string name="snackbar_action_retry">RETRY</string>
     
     <!-- - - - - - - - - - - - - - - - - - 
       - Used by XYZReaderPreferences -

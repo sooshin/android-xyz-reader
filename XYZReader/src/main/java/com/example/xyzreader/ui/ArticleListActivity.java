@@ -445,12 +445,26 @@ public class ArticleListActivity extends AppCompatActivity implements
      */
     private void showSnackbar(boolean isConnected) {
         String snackMessage;
+        Snackbar snackbar;
         if (isConnected) {
             snackMessage = getString(R.string.snackbar_online);
+            snackbar = Snackbar.make(mCoordinatorLayout, snackMessage, Snackbar.LENGTH_LONG);
         } else {
             snackMessage = getString(R.string.snackbar_offline);
+            snackbar = Snackbar.make(mCoordinatorLayout, snackMessage, Snackbar.LENGTH_LONG);
+            // Add an action "RETRY" to a Snackbar message
+            // Reference: @see "https://www.androidhive.info/2015/09/android-material-design-snackbar-example/"
+            snackbar.setAction(getString(R.string.snackbar_action_retry), new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    // Start the UpdaterService
+                    refresh();
+                    // Rerun the layout animation for RecyclerView
+                    runLayoutAnimation(mRecyclerView);
+                }
+            });
         }
-        Snackbar.make(mCoordinatorLayout, snackMessage, Snackbar.LENGTH_LONG).show();
+        snackbar.show();
     }
 
     private class Adapter extends RecyclerView.Adapter<ViewHolder> {
