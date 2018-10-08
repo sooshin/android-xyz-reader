@@ -6,9 +6,9 @@ import android.view.View;
 
 import static com.example.xyzreader.pagetransformer.DepthPageTransformer.ALPHA_ONE;
 import static com.example.xyzreader.pagetransformer.DepthPageTransformer.ALPHA_ZERO;
-import static com.example.xyzreader.pagetransformer.GatePageTransformer.PIVOT_X;
-import static com.example.xyzreader.pagetransformer.GatePageTransformer.ROTATION_NINETY;
-import static com.example.xyzreader.pagetransformer.GatePageTransformer.ROTATION_NINETY_N;
+import static com.example.xyzreader.pagetransformer.ZoomOutPageTransformer.PIVOT_X;
+import static com.example.xyzreader.pagetransformer.ZoomOutPageTransformer.ROTATION_NINETY;
+import static com.example.xyzreader.pagetransformer.ZoomOutPageTransformer.ROTATION_NINETY_N;
 
 /**
  * A CubeOutPageTransformer provides cube out animation needed for transforming ViewPager scrolling.

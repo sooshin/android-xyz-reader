@@ -54,9 +54,9 @@ import java.util.Map;
 import static com.example.xyzreader.ui.ArticleDetailActivity.CUBE;
 import static com.example.xyzreader.ui.ArticleDetailActivity.DEPTH;
 import static com.example.xyzreader.ui.ArticleDetailActivity.EXTRA_LARGE;
-import static com.example.xyzreader.ui.ArticleDetailActivity.GATE;
 import static com.example.xyzreader.ui.ArticleDetailActivity.LARGE;
 import static com.example.xyzreader.ui.ArticleDetailActivity.MEDIUM;
+import static com.example.xyzreader.ui.ArticleDetailActivity.POP;
 import static com.example.xyzreader.ui.ArticleDetailActivity.SMALL;
 import static com.example.xyzreader.ui.ArticleDetailActivity.ZOOM;
 
@@ -389,8 +389,8 @@ public class ArticleListActivity extends AppCompatActivity implements
             String pageAnimation = sharedPreferences
                     .getString(key, getString(R.string.pref_page_animation_default));
             switch (pageAnimation) {
-                case GATE:
-                    mPageTransformerStr = getString(R.string.pref_page_animation_gate);
+                case POP:
+                    mPageTransformerStr = getString(R.string.pref_page_animation_pop);
                     break;
                 case ZOOM:
                     mPageTransformerStr = getString(R.string.pref_page_animation_zoom);
@@ -402,7 +402,7 @@ public class ArticleListActivity extends AppCompatActivity implements
                     mPageTransformerStr = getString(R.string.pref_page_animation_cube);
                     break;
                 default:
-                    mPageTransformerStr = getString(R.string.pref_page_animation_gate);
+                    mPageTransformerStr = getString(R.string.pref_page_animation_pop);
             }
 
         } else if (key.equals(getString(R.string.pref_text_size_key))) {

@@ -15,6 +15,10 @@ public class ZoomOutPageTransformer implements ViewPager.PageTransformer{
     private static final float MIN_ALPHA = 0.5f;
     private static final float ALPHA_ZERO = 0f;
     private static final int NUMBER_TWO = 2;
+    static final int ROTATION_NINETY = 90;
+    static final int ROTATION_NINETY_N = -90;
+    static final int PIVOT_X = 0;
+
 
     public void transformPage(@NonNull View view, float position) {
         int pageWidth = view.getWidth();

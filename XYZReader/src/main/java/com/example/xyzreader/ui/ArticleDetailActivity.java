@@ -28,7 +28,7 @@ import com.example.xyzreader.data.ArticleLoader;
 import com.example.xyzreader.data.ItemsContract;
 import com.example.xyzreader.pagetransformer.CubeOutPageTransformer;
 import com.example.xyzreader.pagetransformer.DepthPageTransformer;
-import com.example.xyzreader.pagetransformer.GatePageTransformer;
+import com.example.xyzreader.pagetransformer.PopPageTransformer;
 import com.example.xyzreader.pagetransformer.ZoomOutPageTransformer;
 
 import java.util.List;
@@ -48,7 +48,7 @@ public class ArticleDetailActivity extends AppCompatActivity
     /** Constant string for saving the current state of this Activity */
     private static final String STATE_CURRENT_PAGE_POSITION = "state_current_page_position";
     /** Constant value used for the page transformation */
-    public static final String GATE = "gate";
+    public static final String POP = "pop";
     public static final String ZOOM = "zoom";
     public static final String DEPTH = "depth";
     public static final String CUBE = "cube";
@@ -288,8 +288,8 @@ public class ArticleDetailActivity extends AppCompatActivity
     public ViewPager.PageTransformer getPageTransformer() {
         if (!TextUtils.isEmpty(mPageTransformerStr)) {
             switch (mPageTransformerStr) {
-                case GATE:
-                    mPageTransformer = new GatePageTransformer();
+                case POP:
+                    mPageTransformer = new PopPageTransformer();
                     break;
                 case ZOOM:
                     mPageTransformer = new ZoomOutPageTransformer();
@@ -301,7 +301,7 @@ public class ArticleDetailActivity extends AppCompatActivity
                     mPageTransformer = new CubeOutPageTransformer();
                     break;
                 default:
-                    mPageTransformer = new GatePageTransformer();
+                    mPageTransformer = new PopPageTransformer();
             }
         }
         return mPageTransformer;
