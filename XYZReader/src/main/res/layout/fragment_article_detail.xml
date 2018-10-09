@@ -89,8 +89,7 @@
                     android:fontFamily="@font/roboto_slab_regular"
                     android:lineSpacingMultiplier="@fraction/detail_body_line_spacing_multiplier"
                     android:paddingBottom="@dimen/detail_body_bottom_margin"
-                    android:textColor="@color/color_body_text"
-                    android:textColorLink="@color/theme_accent" />
+                    android:textColor="@color/color_body_text" />
 
             </com.example.xyzreader.ui.MaxWidthLinearLayout>
         </android.support.constraint.ConstraintLayout>
