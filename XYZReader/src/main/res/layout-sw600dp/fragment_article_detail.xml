@@ -9,9 +9,7 @@
         android:layout_width="match_parent"
         android:layout_height="match_parent">
 
-        <!-- Use constraint layout to avoid margin which is caused by setting
-            ThreeTwoImageView -->
-        <android.support.constraint.ConstraintLayout
+        <FrameLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content">
 
@@ -34,17 +32,17 @@
 
             </FrameLayout>
 
+            <!-- Set layout top margin in the tablet mode -->
             <com.example.xyzreader.ui.MaxWidthLinearLayout
                 android:id="@+id/max_width_layout"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_gravity="center_horizontal"
+                android:layout_marginTop="@dimen/detail_card_top_margin"
                 android:background="#fff"
                 android:elevation="@dimen/detail_max_width_elevation"
                 android:maxWidth="@dimen/detail_card_max_width"
-                android:orientation="vertical"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/photo_container">
+                android:orientation="vertical">
 
                 <LinearLayout
                     android:id="@+id/meta_bar"
@@ -93,7 +91,7 @@
                     android:textColorLink="@color/theme_accent" />
 
             </com.example.xyzreader.ui.MaxWidthLinearLayout>
-        </android.support.constraint.ConstraintLayout>
+        </FrameLayout>
     </com.example.xyzreader.ui.ObservableScrollView>
 
     <android.support.design.widget.FloatingActionButton
