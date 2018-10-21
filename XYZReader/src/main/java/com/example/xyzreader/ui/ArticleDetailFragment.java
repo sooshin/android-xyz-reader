@@ -251,6 +251,13 @@ public class ArticleDetailFragment extends Fragment implements
             }
         });
 
+        // It is recommended to remove the call to bindViews() since at this point the loader was
+        // not initialized yet, which happens inside the onActivityCreated(), so there are still
+        // no items to display. By calling this method here, we'll probably have a null Cursor.
+        // Reference: @see "https://discussions.udacity.com/t/weird-behaviour-of-shared-transition/293114"
+        // However, after removing bindViews(), when pressing the up button in the DetailActivity and
+        // then click the item in MainActivity, mPhotoView sometimes load a different image. So I
+        // choose to call bindViews() from onCreateView().
         bindViews();
         updateStatusBar();
         return mRootView;

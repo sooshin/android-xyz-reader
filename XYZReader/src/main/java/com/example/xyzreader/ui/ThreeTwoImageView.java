@@ -51,7 +51,7 @@ public class ThreeTwoImageView extends AppCompatImageView {
      * height, which will make 3:2 aspect ratio.
      *
      * @param widthMeasureSpec horizontal space requirements as imposed by the parent
-     * @param heightMeasureSpec vertical space requirements as imposed by th parent
+     * @param heightMeasureSpec vertical space requirements as imposed by the parent
      */
     @Override
     protected void onMeasure(int widthMeasureSpec, int heightMeasureSpec) {
