@@ -19,6 +19,12 @@ Through this project, you will:
 made by [Freepik](http://www.freepik.com) from [www.flaticon.com](www.flaticon.com) is licensed by
 [CC 3.0 BY](http://creativecommons.org/licenses/by/3.0/).
 
+## Video
+I've created a video demonstrating the app. Click [here](https://youtu.be/EQR6c5XaQIA) to view the video.
+
+## Screenshot
+![xyz_reader_main](https://user-images.githubusercontent.com/33213229/47618315-d4c04780-db14-11e8-900d-8b2f600a264b.png)
+
 ## License
 ```
 Copyright 2018 Soojeong Shin
