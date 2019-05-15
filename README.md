@@ -48,3 +48,6 @@ WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
 See the License for the specific language governing permissions and
 limitations under the License.
 ```
+
+## Review from a Udacity reviewer
+![Make_Your_App_Material_Review](https://user-images.githubusercontent.com/33213229/57780155-a75e8280-7762-11e9-94e5-f222464d452d.png)
