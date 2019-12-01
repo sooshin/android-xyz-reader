@@ -27,7 +27,7 @@
 
         <!-- Use constraint layout to avoid margin which is caused by setting
             ThreeTwoImageView -->
-        <android.support.constraint.ConstraintLayout
+        <androidx.constraintlayout.widget.ConstraintLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content">
 
@@ -108,10 +108,10 @@
                     android:textColor="@color/color_body_text" />
 
             </com.example.xyzreader.ui.MaxWidthLinearLayout>
-        </android.support.constraint.ConstraintLayout>
+        </androidx.constraintlayout.widget.ConstraintLayout>
     </com.example.xyzreader.ui.ObservableScrollView>
 
-    <android.support.design.widget.FloatingActionButton
+    <com.google.android.material.floatingactionbutton.FloatingActionButton
         android:id="@+id/share_fab"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
